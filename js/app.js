@@ -1,2 +1,2 @@
 'use strict'
-const
+const sanitizeMongo = require('express-mongo-sanitize')
