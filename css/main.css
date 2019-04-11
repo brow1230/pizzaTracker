@@ -3,10 +3,13 @@ body{
     /* padding: 1rem; */
 }
 /* MENU STYLE */
+#menu{
+    height:100vh;
+    border-right: 1px solid black;
+}
 #menuList{
     list-style-type: none!important;
     /* text-align: ; */
-    
 }
 #menuItem{
     padding-top: 20px;
