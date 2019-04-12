@@ -1,19 +1,30 @@
-body{
-    margin: 1rem;
-    /* padding: 1rem; */
+
+html{
+    background-color: white;
 }
+/* HEADER */
+.navbar{
+    background-color: orangered;
+}
+.active {
+    background-color:rgb(235, 235, 235)!important;/* playing around with colors*/
+    border-color:black !important;
+     color:black!important; 
+}
+
 /* MENU STYLE */
-#menu{
-    height:100vh;
-    border-right: 1px solid black;
-}
 #menuList{
+    height:100vh;
     list-style-type: none!important;
     /* text-align: ; */
+    border-right: 1px solid black;
+   
 }
-#menuItem{
+.list-group-item{
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid lightgrey
+    border-bottom: 1px solid lightgrey;
+   
 }
 /* DASHBOARD STYLE */
+
