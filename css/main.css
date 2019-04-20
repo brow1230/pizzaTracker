@@ -1,5 +1,6 @@
 .body {
     background-color: #2B303A;
+    
 }
 
 /*********************************SPA*********************************/
@@ -8,7 +9,7 @@
     display: none;
 }
 
-.show {
+.display {
     display: block;
 }
 
@@ -52,14 +53,85 @@
     color: white!important;
 }
 
-.content {
+#homeContainer{
     background-image: url(/img/pizza5.jpeg);
     background-size: cover;
     background-color: #cccccc;
     color: white;
-}
+} 
 
 .list-group-item {
     background-color: #2B303A;
     color: white;
 }
+
+
+
+.signInBtn {
+    border-radius: 30px;
+    border: solid white 1px;
+    color: white;
+    padding: 0px 5px 5px 0x;
+    background-color: #2B303A;
+}
+
+.modal {
+    background-color: rgba(255, 255, 255, 0.404);
+    display: none;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    perspective: 500px;
+    color: white!important;
+}
+
+.modal .modal-wrapper {
+    width: 50%;
+    max-width: 500px;
+    top: 15%;
+    background-color: orangered;
+    position: absolute;
+    text-align: left;
+    box-shadow: 0px 0px 13px 0px rgba(0, 0, 0, 0.4);
+    animation-name: modalopen;
+    animation-duration: .8s;
+    transform: rotateX(0deg);
+}
+
+.modal-header, .modal-body, .modal-footer {
+    padding: 10px;
+    
+ 
+  
+}
+
+
+
+.modal-body {
+    background: #2B303A;
+}
+
+@keyframes modalopen {
+    from {
+        opacity: 0;
+        top: 5%;
+        transform: rotateX(15deg);
+    }
+    to {
+        opacity: 1;
+        top: 15%;
+        transform: rotateX(0deg);
+    }
+}
+
+ .btn-primary{
+    border-radius: 30px;
+    border: solid white 1px;
+    color: white;
+    padding: 0px 5px 5px 0x;
+    background-color: #2B303A;
+
+} 

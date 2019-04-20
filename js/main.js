@@ -1,34 +1,78 @@
 let pages = [];
-let index = "";
+let show = new Event('show');
 
 
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
-    pageSwitch();
+    pages = document.querySelectorAll('.page');
+        pages.forEach((pg)=>{
+            pg.addEventListener('show', pageShown);
+        })
+        
+        document.querySelectorAll('.nav-link').forEach((link)=>{
+            link.addEventListener('click', navigate);
+        })
+        history.replaceState({}, 'Home', '#home');
+        window.addEventListener('popstate', poppin);
 }
 
-/********************************* NAVIGATION *********************************/
-function pageSwitch(){
-    pages = document.querySelectorAll('.page');
-    pages[0].classList.add('show');
-    console.log(pages)
-    pages.forEach(page => {
-        page.querySelector('.navigate').addEventListener('click', navigate); //add the class "navigate" to any html element to make it switch pages (needs a data-target aswell)
-    });
-}
+
 
 function navigate(ev) {
     ev.preventDefault();
-    let currentPage = ev.currentTarget;
-    if (currentPage.getAttribute("data-id")) {
-        index = currentPage.getAttribute("data-id");
+    let currentPage = ev.target.getAttribute('data-target');
+    document.querySelector('.display').classList.remove('display');
+    document.getElementById(currentPage).classList.add('display');
+    console.log(currentPage)
+    history.pushState({}, currentPage, `#${currentPage}`);
+    document.getElementById(currentPage).dispatchEvent(show);
     }
-    console.log(currentPage);
-    document.querySelector('.show').classList.remove('show');
-    let target = currentPage.getAttribute('data-target');
-    document.getElementById(target).classList.add('show');
-    
 
+function pageShown(ev){
+    console.log('Page', ev.target.id, 'just shown');
+    let h1 = ev.target.querySelector('h1');
+    h1.classList.add('big')
+    setTimeout((h)=>{
+        h.classList.remove('big');
+    }, 1200, h1);
 }
 
+function poppin(ev){
+
+    console.log(location.hash, 'popstate event');
+        let hash = location.hash.replace('#' ,'');
+        document.querySelector('.display').classList.remove('display');
+        document.getElementById(hash).classList.add('display');
+        console.log(hash)
+        history.pushState({}, currentPage, `#${currentPage}`);
+        document.getElementById(hash).dispatchEvent(show);
+}
+
+
+
+
+/********************************* MODAL *********************************/
+let btn = document.querySelector('.signInBtn'),
+    modal = document.querySelector('.modal'),
+    closeBtn = document.querySelector('.closeBtn');
+    signUpBtn = document.querySelector('.signUpBtn');
+
+//    signUpBtn.addEventListener('click', function () {
+//         modal.style.display = "none";
+//     })
+
+btn.addEventListener('click', function () {
+    modal.style.display = 'flex';
+    console.log("clicked");
+})
+
+closeBtn.addEventListener('click', function () {
+    modal.style.display = "none";
+})
+
+window.addEventListener('click', function (e) {
+    if (e.target == modal) {
+        modal.style.display = "none";
+    }
+})
