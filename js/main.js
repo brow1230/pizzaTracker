@@ -14,6 +14,8 @@ function init() {
 }
 
 function addListeners() {
+    let signUpSubmit_Btn = document.getElementById('signUpSubmit')
+    signUpSubmit_Btn.addEventListener('click', myShit.postNewUser)
     // document.querySelector('.confirmBtn').addEventListener('click', doLogin);
 }
 
@@ -98,7 +100,7 @@ let myShit = {
     //base URL,
     //If you start mongod and populate the database on your computer, and then start the app it'll work
     url:"http://localhost:3030/api/",
-    //basic get request
+    //basic get request for pizza
     findPizzas:function(){
         fetch(myShit.url+"pizzas/")
         .then((res) => {
@@ -106,11 +108,11 @@ let myShit = {
         })
         .then((res)=> {
             console.log(res)
-            myShit.buildPizzaList(res)
+            myShit.buildList(res)
         })
     },
     //making the pizzas appear on the page
-    buildPizzaList:function(res) {
+    buildList:function(res) {
         res.data.forEach(function(item){
             //find the element for use later
             let table = document.getElementById('pizzaList')
@@ -164,4 +166,30 @@ let myShit = {
             console.log(item)
         })
     },
+    postNewUser:function(){
+        let isStaff = null
+            let value = document.getElementById('accountType').value
+            isStaff= false
+            if (value != "false"){
+                isStaff = true
+            }
+        let newUser = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            password: document.getElementById('password').value,
+            email: document.getElementById('email').value,
+            isStaff: isStaff,
+        }
+        let option = {
+            method: 'POST',
+            mode: 'cors',
+            credentials:'*',
+            body: JSON.stringify(newUser)
+        }
+
+        fetch(url + "")
+        console.log(newUser)
+
+
+    }
 }

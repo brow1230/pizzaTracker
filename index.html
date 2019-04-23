@@ -80,37 +80,37 @@
                         <form id="signUpForm">
                             <div class="form-row align-center">
                                 <div class="form-group col-md-6">
-                                    <label for="inputName">First Name:</label>
-                                    <input type="text" class="form-control" id="inputName" placeholder="First Name">
+                                    <label for="firstName">First Name:</label>
+                                    <input type="text" class="form-control" id="firstName" placeholder="First Name">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputName2">Last Name:</label>
-                                    <input type="text" class="form-control" id="inputName2" placeholder="Last Name">
+                                    <label for="lastName">Last Name:</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last Name">
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Email:</label>
-                                    <input type="email" class="form-control" id="inputEmail4"
+                                <div class="form-group col-md-12">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email"
                                         placeholder="example@domain">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4"
+                                <div class="form-group col-md-12">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password"
                                         placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-6">
-                                    <label for="inputState">User Type</label>
-                                    <select id="inputUserType" class="form-control">
+                                <div class="form-group col-12">
+                                    <label for="accountType">Account Privelige Type</label>
+                                    <select id="accountType" class="form-control">
                                         <option selected>Choose...</option>
-                                        <option>Customer</option>
-                                        <option>Staff</option>
+                                        <option value="false">Customer</option>
+                                        <option value="true">Staff</option>
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="nav-link float-right btn btn-primary" data-target="">Submit</button>
+                            <button type="submit" class="nav-link float-right btn btn-primary" id="signUpSubmit" data-target="homePage">Submit</button>
                     </div>
                     </form>
             </div>
