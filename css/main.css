@@ -58,7 +58,7 @@
 }
 
 #homeContainer {
-    background-image: url(/img/pizza5.jpeg);
+    background-image: url(/./img/pizza5.jpeg);
     background-size: cover;
     background-color: #cccccc;
     color: white;
