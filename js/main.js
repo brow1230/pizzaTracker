@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
     pageSwitch();
     addListeners();
-    showAdmin();
+    // showAdmin();
+    myShit.findPizzas();
 }
 
 function addListeners() {
@@ -93,3 +94,74 @@ signUpBtn.addEventListener('click', function () {
 })
 
 
+let myShit = {
+    //base URL,
+    //If you start mongod and populate the database on your computer, and then start the app it'll work
+    url:"http://localhost:3030/api/",
+    //basic get request
+    findPizzas:function(){
+        fetch(myShit.url+"pizzas/")
+        .then((res) => {
+            return res.json()
+        })
+        .then((res)=> {
+            console.log(res)
+            myShit.buildPizzaList(res)
+        })
+    },
+    //making the pizzas appear on the page
+    buildPizzaList:function(res) {
+        res.data.forEach(function(item){
+            //find the element for use later
+            let table = document.getElementById('pizzaList')
+            //creating elements for each item return from the fetch
+            let row = document.createElement('tr')
+            let name = document.createElement('td')
+            let price = document.createElement('td')
+            let gf = document.createElement('td')
+            let buttons = document.createElement('td')
+            let edit = document.createElement('button')
+            let remove = document.createElement('button')
+            let removeType = document.createAttribute('type')
+            let editType = document.createAttribute('type')
+            let removeID = document.createAttribute('data-id')
+            let editID = document.createAttribute('data-id')
+
+
+            //giving them all the values
+            name.textContent = item.name
+            price.textContent = item.price
+            editID.value = item.id
+            removeID.value = item.id
+            gf.textContent = "no"
+            edit.textContent = "Edit"
+            remove.textContent = "Delete"
+            editType.value = "button"
+            removeType.value = "button"
+
+            //adding classes and other attributes to the buttons
+            edit.classList.add('btn')
+            edit.classList.add('btn-dark')
+            edit.setAttributeNode(editID)
+            edit.setAttributeNode(editType)
+
+            remove.classList.add('btn')
+            remove.classList.add('btn-dark')
+            remove.setAttributeNode(removeID)
+            remove.setAttributeNode(removeType)
+            
+            //append child
+            buttons.appendChild(edit)
+            buttons.appendChild(remove)
+
+            row.appendChild(name)
+            row.appendChild(price)
+            row.appendChild(gf)
+            row.appendChild(buttons)
+
+            table.appendChild(row)
+
+            console.log(item)
+        })
+    },
+}
