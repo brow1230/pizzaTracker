@@ -22,7 +22,8 @@
             </a>
             <!--SIGN IN BUTTON-->
             <form class="form" id="formLogin">
-                <button type="button" class="signInBtn">Sign In</button>
+                <button type="button" class="signInBtn btn btn-dark">Sign In</button>
+                
             </form>
         </nav>
         <!--MAIN CONTENT START-->
@@ -33,20 +34,21 @@
                     <ul class="list-group list-group-flush" id="menuList">
                         <li class="nav-link list-group-item active list-group-item-action" data-target="homePage">Home
                         </li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Inventory </li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">Pizza</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery </li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="admin/pizzas">Pizza List</li>
                     </ul>
                 </section>
                 <!--SIDEBAR NAV MENU END -->
                 <section class="content col-md-10">
-                    <h1 id="text">home page</h1>
+                    <h1 id="text">BrandonBrowns Pizza</h1>
                     <p>moretext</p>
                 </section>
             </div>
         </main>
-        <!---MAIN CONTENT END-->
+  
     </section>
-
+      <!---MAIN CONTENT END-->
     <!------------------------------SignUpPAge------------------------------>
     <section class="page " id="signUpPage">
         <!--BRAND HEADER-->
@@ -55,7 +57,7 @@
             </a>
             <!--SIGN IN BUTTON-->
             <form class="form" id="formLogin">
-                <button type="button" class="signInBtn"> Sign In</button>
+                <button type="button" class="signInBtn btn btn-dark"> Sign In</button>
             </form>
         </nav>
 
@@ -66,8 +68,8 @@
                 <section class="col-md-2" id="menu">
                     <ul class="list-group list-group-flush" id="menuList">
                         <li class="nav-link list-group-item list-group-item-action" data-target="homePage">Home</li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Inventory </li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">Pizza</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us</li>
                     </ul>
                 </section>
                 <!--SIDEBAR NAV MENU END -->
@@ -108,12 +110,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="float-right btn btn-primary">Submit</button>
+                            <button type="submit" class="nav-link float-right btn btn-primary" data-target="">Submit</button>
                     </div>
                     </form>
             </div>
     </section>
-
     </main>
     <!---MAIN CONTENT END-->
     </section>
@@ -125,7 +126,7 @@
             </a>
             <!--SIGN IN BUTTON-->
             <form class="form" id="formLogin">
-                <button type="button" class="signInBtn">Sign In</button>
+                <button type="button" class="signInBtn btn btn-dark">Sign In</button>
             </form>
         </nav>
         <!--SIGN IN MODAL-->
@@ -136,20 +137,21 @@
                 <section class="col-md-2" id="menu">
                     <ul class="list-group list-group-flush" id="menuList">
                         <li class="nav-link list-group-item list-group-item-action" data-target="homePage">Home</li>
-                        <li class="nav-link list-group-item active list-group-item-action" data-target="page2">Inventory
+                        <li class="nav-link list-group-item active list-group-item-action" data-target="page2">Gallery
                         </li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">Pizza</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us</li>
                     </ul>
                 </section>
                 <!--SIDEBAR NAV MENU END -->
                 <section class="content col-md-10">
-                    <h1 id="text">Page 2</h1>
+                    <h1 id="text">Gallery</h1>
                     <p>moretext</p>
                 </section>
             </div>
         </main>
-        <!---MAIN CONTENT END-->
+       
     </section>
+    
     <!------------------------------page3------------------------------>
     <section class="page" id="page3">
         <!--BRAND HEADER-->
@@ -158,7 +160,7 @@
             </a>
             <!--SIGN IN BUTTON-->
             <form class="form" id="formLogin">
-                <button type="button" class="signInBtn">Sign In</button>
+                <button type="button" class="signInBtn btn btn-dark">Sign In</button>
             </form>
         </nav>
         <!--MAIN CONTENT START-->
@@ -168,20 +170,88 @@
                 <section class="col-md-2" id="menu">
                     <ul class="list-group list-group-flush" id="menuList">
                         <li class="nav-link list-group-item list-group-item-action" data-target="homePage">Home</li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Inventory </li>
-                        <li class="nav-link list-group-item active list-group-item-action" data-target="page3">Pizza
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery </li>
+                        <li class="nav-link list-group-item active list-group-item-action" data-target="page3">About Us
                         </li>
                     </ul>
                 </section>
                 <!--SIDEBAR NAV MENU END -->
                 <section class="content col-md-10">
-                    <h1 id="text">Page 3</h1>
+                    <h1 id="text">About Us</h1>
                     <p>moretext</p>
                 </section>
             </div>
         </main>
-        <!---MAIN CONTENT END-->
     </section>
+ <!------------------------------ADMIN PIZZA LIST------------------------------>
+    <section class="page" id="admin/pizzas">
+        <!--BRAND HEADER-->
+        <nav class="navbar navbar sticky-top navbar-dark ">
+            <a class="navbar-brand" href="#">
+            </a>
+            <!--SIGN IN BUTTON-->
+            <form class="form" id="formLogin">
+                <button type="button" class="signInBtn btn btn-dark">Sign In</button>
+            </form>
+        </nav>
+        <!--MAIN CONTENT START-->
+        <main id="adminPizzaContainer">
+            <div class="row">
+                <!--SIDEBAR NAV MENU-->
+                <section class="col-md-2" id="menu">
+                    <ul class="list-group list-group-flush" id="menuList">
+                        <li class="nav-link list-group-item active list-group-item-action" data-target="admin/pizzas">Home
+                        </li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery </li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us</li>
+                    </ul>
+                </section>
+                <!--SIDEBAR NAV MENU END -->
+                <section class="content col-md-10">
+                    <h1 id="text">Pizzas</h1>
+                    <button type="button" class="btn btn-dark mb-5">Add New Pizza</button>
+                    <table class="table table-hover ">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price($)</th>
+                            <th scope="col">Gluten Free</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>pizza 1</td>
+                            <td>15</td>
+                            <td>false</td>
+                            <td> <button type="button" class="btn btn-dark">Edit</button>
+                                <button type="button" class="btn btn-dark ">Delete</button></td>
+                          </tr>
+                          <tr>
+                            <td>pizza2</td>
+                            <td>10</td>
+                            <td>true</td>
+                            <td> <button type="button" class="btn btn-dark">Edit</button>
+                                <button type="button" class="btn btn-dark">Delete</button></td>
+                          </tr>
+                          <tr>
+                            <td>pizza3</td>
+                            <td>10</td>
+                            <td>false</td>
+                            <td> <button type="button" class="btn btn-dark">Edit</button>
+                            <button type="button" class="btn btn-dark">Delete</button></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </section>
+            </div>
+        </main>
+  
+    </section>
+
+
+        <!------------------------------MODAL WINDOW------------------------------>
+ 
     <div class="modal">
         <div class="modal-wrapper">
             <div class="modal-header">
@@ -209,6 +279,9 @@
             </div>
         </div>
     </div>
+
+
+    
 
     <script src="js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

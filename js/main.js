@@ -1,5 +1,6 @@
 let pages = [];
 let show = new Event('show');
+let admin = true;
 
 
 document.addEventListener("DOMContentLoaded", init);
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", init);
 function init() {
     pageSwitch();
     addListeners();
+    showAdmin();
 }
 
 function addListeners() {
@@ -61,7 +63,6 @@ function poppin(ev) {
 
 
 
-
 /********************************* MODAL *********************************/
 let signInBtn = document.querySelector('.signInBtn'),
     modal = document.querySelector('.modal'),
@@ -87,3 +88,5 @@ window.addEventListener('click', function (e) {
 signUpBtn.addEventListener('click', function () {
     modal.style.display = "none";
 })
+
+

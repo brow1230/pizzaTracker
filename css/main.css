@@ -16,6 +16,9 @@
     display: block;
 }
 
+.pizzaListPage{
+    display:none;
+}
 /********************************* HEADER BAR *********************************/
 
 .navbar {
@@ -28,7 +31,6 @@
     list-style-type: none!important;
     /* text-align: ; */
     border-right: 1px solid black;
-    border: 1px solid black;
     background-color: #2B303A;
     text-align: center;
     height: 100vh;
@@ -48,9 +50,8 @@
 .list-group-item {
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;     
 }
-
 .list-group-item:hover {
     background-color: rgba(235, 235, 235, 0.144)!important;
     border-color: black !important;
@@ -58,7 +59,7 @@
 }
 
 #homeContainer {
-    background-image: url(/./img/pizza5.jpeg);
+    background-image: url(/./img/pizza5.jpeg); /* https://stock.adobe.com/images/original-neapolitan-pizza-margherita-in-a-traditional-wood-oven-in-naples-restaurant-italy/205447060  */
     background-size: cover;
     background-color: #cccccc;
     color: white;
@@ -75,10 +76,7 @@
 .signInBtn {
     border-radius: 30px;
     border: solid white 1px;
-    color: white;
-    padding: 0px 5px 5px 0x;
-    background-color: #2B303A;
-}
+} 
 
 .modal {
     background-color: rgba(255, 255, 255, 0.404);
@@ -152,6 +150,23 @@
     background-color: #8D909B;
 }
 
+
+
+/********************************* admin page*********************************/
+
+#adminPizzaContainer {
+    background-color: #F7F0F0;
+}
+
+
+.table td, table tr {
+    text-align: center;   
+ }
+
+#text{
+    text-align: center;
+    margin:2rem 0 2rem 0;
+}
 
 
 @media (max-width: 576px) { /* need this for nav menu on mobile  */
