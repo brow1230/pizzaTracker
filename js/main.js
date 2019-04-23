@@ -63,6 +63,9 @@ function poppin(ev) {
 
 
 
+
+
+
 /********************************* MODAL *********************************/
 let signInBtn = document.querySelector('.signInBtn'),
     modal = document.querySelector('.modal'),

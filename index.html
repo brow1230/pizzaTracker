@@ -15,7 +15,7 @@
 <body>
 
     <!------------------------------HOME PAGE------------------------------>
-    <section class="page display" id="homePage">
+    <section class="page" id="homePage">
         <!--BRAND HEADER-->
         <nav class="navbar navbar sticky-top navbar-dark ">
             <a class="navbar-brand" href="#">
@@ -246,9 +246,41 @@
                 </section>
             </div>
         </main>
-  
     </section>
 
+    <section class="page display" id="Add/Edit">
+        <!--BRAND HEADER-->
+        <nav class="navbar navbar sticky-top navbar-dark ">
+            <a class="navbar-brand" href="#">
+            </a>
+            <!--SIGN IN BUTTON-->
+            <form class="form" id="formLogin">
+                <button type="button" class="signInBtn btn btn-dark">Sign In</button>
+                
+            </form>
+        </nav>
+        <!--MAIN CONTENT START-->
+        <main id="homeContainer">
+            <div class="row">
+                <!--SIDEBAR NAV MENU-->
+                <section class="col-md-2" id="menu">
+                    <ul class="list-group list-group-flush" id="menuList">
+                        <li class="nav-link list-group-item active list-group-item-action" data-target="homePage">Home
+                        </li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery </li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="admin/pizzas">Pizza List</li>
+                    </ul>
+                </section>
+                <!--SIDEBAR NAV MENU END -->
+                <section class="content col-md-10">
+                    <h1 id="text">BrandonBrowns Pizza</h1>
+                    <p>moretext</p>
+                </section>
+            </div>
+        </main>
+  
+    </section>
 
         <!------------------------------MODAL WINDOW------------------------------>
  
