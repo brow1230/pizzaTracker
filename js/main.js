@@ -1,106 +1,103 @@
-let pages = [];
-let show = new Event('show');
-let admin = true;
-let token = null;
+let front = {
+    pages:[],
+    show: new Event('show'),
+    admin: true,
 
-document.addEventListener("DOMContentLoaded", init);
-
-
-function init() {
-    pageSwitch();
-    addListeners();
-    // showAdmin();
-    myShit.findPizzas();
-}
-
-function addListeners() {
-    let signUpSubmit_Btn = document.getElementById('signUpSubmit')
-    let signIn_Btn = document.getElementById('signIn')
+    start: function(){
+        document.addEventListener("DOMContentLoaded", front.init);
+    },
     
-    signUpSubmit_Btn.addEventListener('click', myShit.postNewUser)
-    signIn_Btn.addEventListener('click', myShit.loginUser)
+    init: function(){ 
+        front.pageSwitch();
+        front.addListeners();
+        // showAdmin();
+        myShit.findPizzas();
+    },
 
-    // document.querySelector('.confirmBtn').addEventListener('click', doLogin);
-}
+    addListeners: function() {
+        let signUpSubmit_Btn = document.getElementById('signUpSubmit')
+        let signIn_Btn = document.getElementById('signIn')
+        
+        // document.querySelector('.confirmBtn').addEventListener('click', doLogin);
+        signUpSubmit_Btn.addEventListener('click', myShit.postNewUser)
+        signIn_Btn.addEventListener('click', myShit.loginUser)
 
 
+        let signInBtn = document.querySelector('.signInBtn'),
+        modal = document.querySelector('.modal'),
+        closeBtn = document.querySelector('.closeBtn');
+        signUpBtn = document.querySelector('.signUpBtn');
 
-function pageSwitch() {
-    pages = document.querySelectorAll('.page');
-    pages.forEach((pg) => {
-        pg.addEventListener('show', pageShown);
-    })
 
-    document.querySelectorAll('.nav-link').forEach((link) => {
-        link.addEventListener('click', navigate);
-    })
-    history.replaceState({}, 'Home', '#homePage');
-    window.addEventListener('popstate', poppin);
-}
+        signInBtn.addEventListener('click', function () {
+            modal.style.display = 'flex';
+            console.log("clicked");
+        })
 
-function navigate(ev) {
+        closeBtn.addEventListener('click', function () {
+            modal.style.display = "none";
+        })
+
+        window.addEventListener('click', function (e) {
+            if (e.target == modal) {
+                modal.style.display = "none";
+            }
+        })
+
+        signUpBtn.addEventListener('click', function () {
+            modal.style.display = "none";
+        })
+
+    },
+
+    pageSwitch:function () {
+        pages = document.querySelectorAll('.page');
+        pages.forEach((pg) => {
+            pg.addEventListener('show', front.pageShown);
+        })
+    
+        document.querySelectorAll('.nav-link').forEach((link) => {
+            link.addEventListener('click', front.navigate);
+        })
+        history.replaceState({}, 'Home', '#homePage');
+        window.addEventListener('popstate', front.poppin);
+    },
+
+    navigate:function(ev) {
     ev.preventDefault();
     let currentPage = ev.target.getAttribute('data-target');
     document.querySelector('.display').classList.remove('display');
     document.getElementById(currentPage).classList.add('display');
     console.log(currentPage)
     history.pushState({}, currentPage, `#${currentPage}`);
-    document.getElementById(currentPage).dispatchEvent(show);
+    document.getElementById(currentPage).dispatchEvent(front.show);
+    },
+
+    pageShown:function(ev){
+        console.log('Page', ev.target.id, 'just shown');
+        let h1 = ev.target.querySelector('h1');
+        h1.classList.add('big')
+        setTimeout((h) => {
+            h.classList.remove('big');
+        }, 1200, h1);
+    },
+
+    popping:function(ev) {
+        console.log(location.hash, 'popstate event');
+        let hash = location.hash.replace('#', '');
+        document.querySelector('.display').classList.remove('display');
+        document.getElementById(hash).classList.add('display');
+        console.log(hash)
+        history.pushState({}, currentPage, `#${currentPage}`);
+        document.getElementById(hash).dispatchEvent(front.show);
+    },
+
 }
-
-function pageShown(ev) {
-    console.log('Page', ev.target.id, 'just shown');
-    let h1 = ev.target.querySelector('h1');
-    h1.classList.add('big')
-    setTimeout((h) => {
-        h.classList.remove('big');
-    }, 1200, h1);
-}
-
-function poppin(ev) {
-
-    console.log(location.hash, 'popstate event');
-    let hash = location.hash.replace('#', '');
-    document.querySelector('.display').classList.remove('display');
-    document.getElementById(hash).classList.add('display');
-    console.log(hash)
-    history.pushState({}, currentPage, `#${currentPage}`);
-    document.getElementById(hash).dispatchEvent(show);
-}
-
-
-
-
-
-
 /********************************* MODAL *********************************/
-let signInBtn = document.querySelector('.signInBtn'),
-    modal = document.querySelector('.modal'),
-    closeBtn = document.querySelector('.closeBtn');
-    signUpBtn = document.querySelector('.signUpBtn');
-
-
-signInBtn.addEventListener('click', function () {
-    modal.style.display = 'flex';
-    console.log("clicked");
-})
-
-closeBtn.addEventListener('click', function () {
-    modal.style.display = "none";
-})
-
-window.addEventListener('click', function (e) {
-    if (e.target == modal) {
-        modal.style.display = "none";
-    }
-})
-
-signUpBtn.addEventListener('click', function () {
-    modal.style.display = "none";
-})
 
 
 let myShit = {
+    token:null,
     //base URL,
     url:"http://localhost:3030/api/",
     //basic GET request for pizza
@@ -222,9 +219,9 @@ let myShit = {
             })
             .then((res) => {
                 console.log(res)
-                token = res
-                console.log(token)
-                localStorage.setItem('bearer', JSON.stringify(token))
+                myShit.token = res
+                console.log(myShit.token)
+                localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
             })
             console.log("sucess")
         }
@@ -233,5 +230,7 @@ let myShit = {
             console.log(err)
         }
     },
-
+    //
 }
+
+front.start();
