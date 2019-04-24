@@ -11,7 +11,7 @@ let front = {
         front.pageSwitch();
         front.addListeners();
         // showAdmin();
-        myShit.findPizzas();
+        myShit.findAllPizzas();
     },
 
     addListeners: function() {
@@ -101,7 +101,7 @@ let myShit = {
     //base URL,
     url:"http://localhost:3030/api/",
     //basic GET request for pizza
-    findPizzas:function(){
+    findAllPizzas:function(){
         fetch(myShit.url+"pizzas/")
         .then((res) => {
             return res.json()
@@ -109,6 +109,17 @@ let myShit = {
         .then((res)=> {
             console.log(res)
             myShit.buildList(res)
+        })
+    },
+    findAPizza:function(ev) {
+        let id = ev.target.getAttribute('data-id')
+        
+        fetch(myShit.url + "pizzas/"+ id)
+        .then((res)=>{
+            return res.json()
+        })
+        .then((res) =>{ 
+            console.log(res)
         })
     },
     //making the pizzas appear on the page
@@ -128,13 +139,14 @@ let myShit = {
             let editType = document.createAttribute('type')
             let removeID = document.createAttribute('data-id')
             let editID = document.createAttribute('data-id')
-
+            let pizzaID = document.createAttribute('data-id')
 
             //giving them all the values
             name.textContent = item.name
             price.textContent = item.price
-            editID.value = item.id
-            removeID.value = item.id
+            editID.value = item._id
+            removeID.value = item._id
+            pizzaID.value = item._id
             gf.textContent = "no"
             edit.textContent = "Edit"
             remove.textContent = "Delete"
@@ -164,6 +176,8 @@ let myShit = {
             table.appendChild(row)
 
             console.log(item)
+            remove.addEventListener('click', myShit.findAPizza)
+            edit.addEventListener('click', myShit.findAPizza)
         })
     },
     //Post request to /users  //////\\\\\\ Makes New User 
