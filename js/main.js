@@ -102,7 +102,6 @@ signUpBtn.addEventListener('click', function () {
 
 let myShit = {
     //base URL,
-    //If you start mongod and populate the database on your computer, and then start the app it'll work
     url:"http://localhost:3030/api/",
     //basic GET request for pizza
     findPizzas:function(){
