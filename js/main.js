@@ -174,20 +174,27 @@ let myShit = {
                 isStaff = true
             }
         let newUser = {
-            firstName: document.getElementById('firstName').value,
-            lastName: document.getElementById('lastName').value,
-            password: document.getElementById('password').value,
-            email: document.getElementById('email').value,
-            isStaff: isStaff,
+            "firstName": document.getElementById('firstName').value,
+            "lastName": document.getElementById('lastName').value,
+            "password": document.getElementById('password').value,
+            "email": document.getElementById('email').value,
+            "isStaff": isStaff,
         }
         let option = {
             method: 'POST',
             mode: 'cors',
-            credentials:'*',
-            body: JSON.stringify(newUser)
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(newUser)
         }
-
-        fetch(url + "")
+        fetch(myShit.url + "auth/users", option)
+        .then((res) =>{
+            return res.json()
+        })
+        .then((data)=>{
+            console.log(data)
+        })
         console.log(newUser)
 
 
