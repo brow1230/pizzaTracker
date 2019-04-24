@@ -1,7 +1,7 @@
 let pages = [];
 let show = new Event('show');
 let admin = true;
-
+let token = null;
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -15,7 +15,11 @@ function init() {
 
 function addListeners() {
     let signUpSubmit_Btn = document.getElementById('signUpSubmit')
+    let signIn_Btn = document.getElementById('signIn')
+    
     signUpSubmit_Btn.addEventListener('click', myShit.postNewUser)
+    signIn_Btn.addEventListener('click', myShit.loginUser)
+
     // document.querySelector('.confirmBtn').addEventListener('click', doLogin);
 }
 
@@ -100,7 +104,7 @@ let myShit = {
     //base URL,
     //If you start mongod and populate the database on your computer, and then start the app it'll work
     url:"http://localhost:3030/api/",
-    //basic get request for pizza
+    //basic GET request for pizza
     findPizzas:function(){
         fetch(myShit.url+"pizzas/")
         .then((res) => {
@@ -166,6 +170,7 @@ let myShit = {
             console.log(item)
         })
     },
+    //Post request to /users  //////\\\\\\ Makes New User 
     postNewUser:function(){
         let isStaff = null
             let value = document.getElementById('accountType').value
@@ -196,7 +201,38 @@ let myShit = {
             console.log(data)
         })
         console.log(newUser)
+    },
+    //Post reqiest to /users/token /////\\\\\ Login funciton
+    loginUser:function(){
+        let login = {
+            email:document.getElementById('userEmail').value,
+            password:document.getElementById('userPassword').value   
+        }
+        let option = {
+            method: 'POST',
+            mode: 'cors',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(login)
+        }
+        try{
+            fetch(myShit.url + "auth/users/token", option)
+            .then((res) => {
+                return res.json()
+            })
+            .then((res) => {
+                console.log(res)
+                token = res
+                console.log(token)
+                localStorage.setItem('bearer', JSON.stringify(token))
+            })
+            console.log("sucess")
+        }
+        catch(err){
+            console.log("something happened!--------------------------------" )
+            console.log(err)
+        }
+    },
 
-
-    }
 }
