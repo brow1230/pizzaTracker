@@ -28,7 +28,7 @@ let front = {
         closeBtn = document.querySelector('.closeBtn');
         signUpBtn = document.querySelector('.signUpBtn');
 
-
+        // Modela disla
         signInBtn.addEventListener('click', function () {
             modal.style.display = 'flex';
             console.log("clicked");
@@ -235,16 +235,44 @@ let myShit = {
                 console.log(res)
                 myShit.token = res
                 console.log(myShit.token)
+                console.log(myShit.token.data)
                 localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
             })
             console.log("sucess")
+
+            setTimeout(myShit.getUserInfo, 3500)
+
+
         }
         catch(err){
             console.log("something happened!--------------------------------" )
             console.log(err)
         }
     },
-    //
+    //GET user profile info
+    getUserInfo:function() {
+
+
+        let option = {
+            method: 'GET',
+            mode: 'cors',
+            headers:{
+                'Content-Type': 'application/json',
+                'bearer': myShit.token.data
+            }
+        }
+        try{
+            fetch(myShit.url + "auth/users/me", option)
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) =>{
+                console.log(data)
+            })
+        }catch(err){
+            console.log(err)
+        }
+    }
 }
 
 front.start();
