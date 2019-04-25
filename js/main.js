@@ -103,7 +103,6 @@ let myShit = {
     //base URL,
     url:"http://localhost:3030/api/",
     //basic GET request for pizza
-    isSignedIn : false,
     ///////////////////
     /// FIND PIZZAS ///
     ///////////////////
@@ -297,6 +296,7 @@ let myShit = {
                     console.log('Customer')
                     //do customer things
                 }
+                myShit.forward('.pizzaListContainer')
             })
         }catch(err){
             console.log(err)
@@ -356,9 +356,14 @@ let myShit = {
             console.log(err)
         }
     },
-
-
-
+    ///////////////////////////////
+    ///     Page Forwarding     ///
+    ///////////////////////////////
+    forward:function(page){
+        document.querySelector('.modal').style.display = 'none'
+        document.querySelector('.display').classList.remove('display')
+        document.querySelector(page).classList.add('display')
+    },
 }
 
 front.start();
