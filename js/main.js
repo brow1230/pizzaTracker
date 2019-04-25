@@ -15,13 +15,14 @@ let front = {
     },
 
     addListeners: function() {
+        let passChanging_Btn = document.getElementById('changePasswordBtn')
         let signUpSubmit_Btn = document.getElementById('signUpSubmit')
         let signIn_Btn = document.getElementById('signIn')
         
         // document.querySelector('.confirmBtn').addEventListener('click', doLogin);
         signUpSubmit_Btn.addEventListener('click', myShit.postNewUser)
         signIn_Btn.addEventListener('click', myShit.loginUser)
-
+        passChanging_Btn.addEventListener('click', myShit.changePassword)
 
         let signInBtn = document.querySelector('.signInBtn'),
         modal = document.querySelector('.modal'),
@@ -95,6 +96,7 @@ let front = {
 }
 
 let myShit = {
+    id:null,
     token:null,
     //base URL,
     url:"http://localhost:3030/api/",
@@ -251,8 +253,6 @@ let myShit = {
     },
     //GET user profile info
     getUserInfo:function() {
-
-
         let option = {
             method: 'GET',
             mode: 'cors',
@@ -282,6 +282,52 @@ let myShit = {
         fieldFirstName.value = userData.firstName
         fieldLastName.value = userData.lastName
         fieldEmail.value = userData.email
+
+        myShit.id = userData._id
+    },
+
+    changePassword:function() {
+        try{
+            let email = document.getElementById('staticEmail').value
+            let firstCopy = document.getElementById('newPassword').value
+            let secondCopy = document.getElementById('retypeNewPassword').value
+            if(firstCopy === secondCopy){
+                console.log("MATCHED!")
+                myShit.setNewPassword(firstCopy)
+            }else{
+                throw new Error('Passwords dont match')
+            }
+        }catch(err){
+            console.log(err)
+        }
+    },
+    setNewPassword: function(password){ 
+        try{
+            // _id:myShit.id,
+
+            body = {
+                password:password
+            }
+            let option = {
+                method: 'PATCH',
+                mode: 'cors',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'bearer': myShit.token.data
+                },
+                body:JSON.stringify(body)
+            }
+
+            fetch(myShit.url+ "auth/users", option)
+            .then((res)=>{
+                return res.json()
+            })
+            .then((res)=>{
+                console.log(res);
+            })
+        }catch(err){
+            console.log(err)
+        }
     }
 }
 
