@@ -102,6 +102,9 @@ let myShit = {
     url:"http://localhost:3030/api/",
     //basic GET request for pizza
     isSignedIn : false,
+    ///////////////////
+    /// FIND PIZZAS ///
+    ///////////////////
 
     findAllPizzas:function(){
         fetch(myShit.url+"pizzas/")
@@ -182,6 +185,11 @@ let myShit = {
             edit.addEventListener('click', myShit.findAPizza)
         })
     },
+
+
+    /////////////////////////////
+    /// MAKE NEW USER ACCOUNT ///
+    /////////////////////////////
     //Post request to /users  //////\\\\\\ Makes New User 
     postNewUser:function(){
         let isStaff = null
@@ -251,6 +259,11 @@ let myShit = {
             console.log(err)
         }
     },
+
+    
+    ////////////////////////////////////////////////
+    ///     USER PROFILE, PASSWORD CHANGING      ///
+    ////////////////////////////////////////////////
     //GET user profile info
     getUserInfo:function() {
         let option = {
@@ -285,7 +298,6 @@ let myShit = {
 
         myShit.id = userData._id
     },
-
     changePassword:function() {
         try{
             let email = document.getElementById('staticEmail').value
@@ -328,7 +340,8 @@ let myShit = {
         }catch(err){
             console.log(err)
         }
-    }
+    },
+
 }
 
 front.start();
