@@ -96,6 +96,8 @@ let front = {
 }
 
 let myShit = {
+    isAdmin:false,
+    isLoggedIn:false,
     id:null,
     token:null,
     //base URL,
@@ -239,19 +241,23 @@ let myShit = {
         try{
             fetch(myShit.url + "auth/users/token", option)
             .then((res) => {
+                console.log(res)
                 return res.json()
             })
             .then((res) => {
                 console.log(res)
-                myShit.token = res
-                console.log(myShit.token)
-                console.log(myShit.token.data)
-                localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
+                if(res.error){
+                    console.log('error')
+                }else{
+                    myShit.token = res
+                    myShit.isLoggedIn = true;
+                    // console.log(myShit.token)
+                    // console.log(myShit.token.data)
+                    localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
+                    setTimeout(myShit.getUserInfo, 1500)        
+                    console.log("sucess")
+                }
             })
-            console.log("sucess")
-
-            setTimeout(myShit.getUserInfo, 3500)
-
 
         }
         catch(err){
@@ -260,7 +266,7 @@ let myShit = {
         }
     },
 
-    
+
     ////////////////////////////////////////////////
     ///     USER PROFILE, PASSWORD CHANGING      ///
     ////////////////////////////////////////////////
@@ -280,8 +286,17 @@ let myShit = {
                 return res.json()
             })
             .then((data) =>{
-                console.log(data)
+                myShit.isAdmin = data.data.isStaff
+
                 myShit.profileBuilder(data.data)
+                
+                if(myShit.isAdmin){
+                    console.log('Admin')
+                    //do admin things 
+                }else{
+                    console.log('Customer')
+                    //do customer things
+                }
             })
         }catch(err){
             console.log(err)
@@ -341,6 +356,8 @@ let myShit = {
             console.log(err)
         }
     },
+
+
 
 }
 
