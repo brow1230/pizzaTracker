@@ -268,10 +268,20 @@ let myShit = {
             })
             .then((data) =>{
                 console.log(data)
+                myShit.profileBuilder(data.data)
             })
         }catch(err){
             console.log(err)
         }
+    },
+    profileBuilder:function(userData) {
+        let fieldFirstName = document.getElementById('staticFirstName')
+        let fieldLastName = document.getElementById('staticLastName')
+        let fieldEmail = document.getElementById('staticEmail')
+
+        fieldFirstName.value = userData.firstName
+        fieldLastName.value = userData.lastName
+        fieldEmail.value = userData.email
     }
 }
 
