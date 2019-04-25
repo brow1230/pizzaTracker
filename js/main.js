@@ -93,14 +93,14 @@ let front = {
     },
 
 }
-/********************************* MODAL *********************************/
-
 
 let myShit = {
     token:null,
     //base URL,
     url:"http://localhost:3030/api/",
     //basic GET request for pizza
+    isSignedIn : false,
+
     findAllPizzas:function(){
         fetch(myShit.url+"pizzas/")
         .then((res) => {
