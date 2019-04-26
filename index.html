@@ -37,7 +37,7 @@
                         <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery </li>
                         <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us</li>
                         <li class="nav-link list-group-item list-group-item-action" data-target="profile">Profile</li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="admin/pizzas">Pizza
+                        <li class="nav-link list-group-item list-group-item-action" data-target="pizzas-list">Pizza
                             List</li>
                         <li class="nav-link list-group-item list-group-item-action" data-target="admin/ingredients">Ingredient List
                             </li>
@@ -255,7 +255,7 @@
         </main>
     </section>
     <!------------------------------ADMIN PIZZA LIST------------------------------>
-    <section class="page pizzaListContainer" id="admin/pizzas ">
+    <section class="page pizzaListContainer" id="pizzas-list">
         <!--BRAND HEADER-->
         <nav class="navbar navbar sticky-top navbar-dark ">
             <a class="navbar-brand" href="#">
@@ -301,7 +301,7 @@
     </section>
     
         <!------------------------------ADMIN INGREDIENT LIST------------------------------>
-        <section class="page" id="admin/ingredients">
+        <section class="page ingredientsListContainer" id="admin/ingredients">
             <!--BRAND HEADER-->
             <nav class="navbar navbar sticky-top navbar-dark ">
                 <a class="navbar-brand" href="#">
@@ -312,7 +312,7 @@
                 </form>
             </nav>
             <!--MAIN CONTENT START-->
-            <main id="adminPizzaContainer">
+            <main id="adminIngredientsContainer">
                 <div class="row">
                     <!--SIDEBAR NAV MENU-->
                     <section class="col-md-2" id="menu">
@@ -328,7 +328,7 @@
                     </section>
                     <!--SIDEBAR NAV MENU END -->
                     <section class="content col-md-10">
-                        <h1 id="text">Pizzas</h1>
+                        <h1 id="text">Ingredients</h1>
                         <button type="button" class="nav-link btn btn-dark mb-5" data-target="admin/ingredient-edit">Add New Ingredient</button>
                         <table class="table table-hover ">
                             <thead class="thead-dark">
@@ -339,7 +339,7 @@
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="pizzaList"></tbody>
+                            <tbody id="ingredientsList"></tbody>
                         </table>
                     </section>
                 </div>

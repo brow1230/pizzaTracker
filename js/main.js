@@ -99,7 +99,6 @@ let front = {
             document.getElementById(hash).dispatchEvent(front.show);
         },
 
-
         //show password checkbox
         showPassword: function () {
             let newPassword = document.getElementById("newPassword"),
@@ -118,9 +117,6 @@ let front = {
             }
         },
 
-
-
-
         userNotification: function () {
 
             let modaldiv = document.createElement('div')
@@ -134,8 +130,6 @@ let front = {
             document.body.appendChild(modaldiv)
         },
 
-
-
         removeNotifiction: function () {
             // find the modal and remove if it exists
             let userAlert= document.querySelector('.userAlert')
@@ -143,7 +137,6 @@ let front = {
                 userAlert.remove()
             }
         }
-
     }
 
         let myShit = {
@@ -166,8 +159,8 @@ let front = {
             return res.json()
         })
         .then((res)=> {
-            console.log(res)
-            myShit.buildList(res)
+            // console.log(res)
+            myShit.buildPizzaList(res)
         })
 
     },
@@ -179,14 +172,14 @@ let front = {
                 return res.json()
             })
             .then((res) => {
-                console.log(res)
+                myShit.editingPizza(res)
             })
     },
     //making the pizzas appear on the page
-    buildList: function (res) {
+    buildPizzaList: function (res) {
         res.data.forEach(function (item) {
-            //find the element for use later
             let table = document.getElementById('pizzaList')
+            //find the element for use later
             //creating elements for each item return from the fetch
             let row = document.createElement('tr')
             let name = document.createElement('td')
@@ -234,8 +227,7 @@ let front = {
             row.appendChild(buttons)
 
             table.appendChild(row)
-
-            console.log(item)
+            // console.log(item)
             remove.addEventListener('click', myShit.deletePizza)
             edit.addEventListener('click', myShit.findAPizza)
         })
@@ -244,10 +236,11 @@ let front = {
     //adding new pizzas
 
     //editing pizzas
-
+    editingPizza:function(){
+        // myShit.forward('.')
+    },
     //deleting pizzas
     deletePizza:function(ev){
-        console.log('uhm stuck?')
         let id = ev.target.getAttribute('data-id')
             let option = {
                 method: 'DELETE',
@@ -266,11 +259,82 @@ let front = {
                 let box = ev.target.parentElement.parentElement.parentElement
                 box.innerHTML = " "
                 myShit.findAllPizzas()
-                // console.log()
             })
     },
 
+    ///////////////////////////////////
+    ///     INGREDIENTS FUNCTIONS   ///
+    ///////////////////////////////////
+    getIngredients:function(){
+        fetch(myShit.url+"ingredients/")
+        .then((res) => {
+            return res.json()
+        })
+        .then((res)=> {
+            myShit.buildIngredientsList(res)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    },
+    // ingredientsListContainer
+    //Building Ingredients List
+    buildIngredientsList: function (res) {
+        res.data.forEach(function (item) {
+            let table = document.getElementById('ingredientsList')
+            //find the element for use later
+            //creating elements for each item return from the fetch
+            let row = document.createElement('tr')
+            let name = document.createElement('td')
+            let price = document.createElement('td')
+            let gf = document.createElement('td')
+            let buttons = document.createElement('td')
+            let edit = document.createElement('button')
+            let remove = document.createElement('button')
+            let removeType = document.createAttribute('type')
+            let editType = document.createAttribute('type')
+            let removeID = document.createAttribute('data-id')
+            let editID = document.createAttribute('data-id')
+            let pizzaID = document.createAttribute('data-id')
 
+            //giving them all the values
+            name.textContent = item.name
+            price.textContent = item.price
+            editID.value = item._id
+            removeID.value = item._id
+            pizzaID.value = item._id
+            gf.textContent = "no"
+            edit.textContent = "Edit"
+            remove.textContent = "Delete"
+            editType.value = "button"
+            removeType.value = "button"
+
+            //adding classes and other attributes to the buttons
+            edit.classList.add('btn')
+            edit.classList.add('btn-dark')
+            edit.setAttributeNode(editID)
+            edit.setAttributeNode(editType)
+
+            remove.classList.add('btn')
+            remove.classList.add('btn-dark')
+            remove.setAttributeNode(removeID)
+            remove.setAttributeNode(removeType)
+
+            //append child
+            buttons.appendChild(edit)
+            buttons.appendChild(remove)
+
+            row.appendChild(name)
+            row.appendChild(price)
+            row.appendChild(gf)
+            row.appendChild(buttons)
+
+            table.appendChild(row)
+            // console.log(item)
+            // remove.addEventListener('click', myShit.deletePizza)
+            // edit.addEventListener('click', myShit.findAPizza)
+        })
+    },
     /////////////////////////////
     /// MAKE NEW USER ACCOUNT ///
     /////////////////////////////
@@ -324,18 +388,15 @@ let front = {
             fetch(myShit.url + "auth/users/token", option)
 
             .then((res) => {
-                console.log(res)
                 return res.json()
             })
             .then((res) => {
-                console.log(res)
                 if(res.error){
                     console.log('error')
                 }else{
                     myShit.token = res.data
                     myShit.isLoggedIn = true;
-                    // console.log(myShit.token)
-                    // console.log(myShit.token.data)
+
                     localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
                     setTimeout(myShit.getUserInfo, 1500)        
                     console.log("sucess")
@@ -353,8 +414,6 @@ let front = {
 
     //GET user profile info
     getUserInfo: function () {
-
-
         let option = {
             method: 'GET',
             mode: 'cors',
@@ -377,6 +436,8 @@ let front = {
                 if(myShit.isAdmin){
                     console.log('Admin')
                     //do admin things 
+                    myShit.getIngredients()
+
                 }else{
                     console.log('Customer')
                     //do customer things
@@ -407,7 +468,7 @@ let front = {
                 console.log("MATCHED!")
                 myShit.setNewPassword(firstCopy)
             }else{
-                throw new Error('Passwords dont match')
+                console.log('Passwords didnt match')
             }
         }catch(err){
             console.log(err)
