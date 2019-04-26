@@ -122,21 +122,29 @@ let front = {
 }
 
 let myShit = {
-    token: null,
+
+    isAdmin:false,
+    isLoggedIn:false,
+    id:null,
+    token:null,
     //base URL,
     url: "http://localhost:3030/api/",
     //basic GET request for pizza
-    isSignedIn: false,
 
-    findAllPizzas: function () {
-        fetch(myShit.url + "pizzas/")
-            .then((res) => {
-                return res.json()
-            })
-            .then((res) => {
-                console.log(res)
-                myShit.buildList(res)
-            })
+    ///////////////////
+    /// FIND PIZZAS ///
+    ///////////////////
+
+    findAllPizzas:function(){
+        fetch(myShit.url+"pizzas/")
+        .then((res) => {
+            return res.json()
+        })
+        .then((res)=> {
+            console.log(res)
+            myShit.buildList(res)
+        })
+
     },
     findAPizza: function (ev) {
         let id = ev.target.getAttribute('data-id')
@@ -255,26 +263,35 @@ let myShit = {
         }
         try {
             fetch(myShit.url + "auth/users/token", option)
-                .then((res) => {
-                    return res.json()
-                })
-                .then((res) => {
-                    console.log(res)
+
+            .then((res) => {
+                console.log(res)
+                return res.json()
+            })
+            .then((res) => {
+                console.log(res)
+                if(res.error){
+                    console.log('error')
+                }else{
                     myShit.token = res
-                    console.log(myShit.token)
-                    console.log(myShit.token.data)
+                    myShit.isLoggedIn = true;
+                    // console.log(myShit.token)
+                    // console.log(myShit.token.data)
                     localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
-                })
-            console.log("sucess")
-
-            setTimeout(myShit.getUserInfo, 3500)
-
-
+                    setTimeout(myShit.getUserInfo, 1500)        
+                    console.log("sucess")
+                }
+            })
         } catch (err) {
             console.log("something happened!--------------------------------")
             console.log(err)
         }
     },
+
+    ////////////////////////////////////////////////
+    ///     USER PROFILE, PASSWORD CHANGING      ///
+    ////////////////////////////////////////////////
+
     //GET user profile info
     getUserInfo: function () {
 
@@ -289,14 +306,25 @@ let myShit = {
         }
         try {
             fetch(myShit.url + "auth/users/me", option)
-                .then((res) => {
-                    return res.json()
-                })
-                .then((data) => {
-                    console.log(data)
-                    myShit.profileBuilder(data.data)
-                })
-        } catch (err) {
+
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) =>{
+                myShit.isAdmin = data.data.isStaff
+
+                myShit.profileBuilder(data.data)
+                
+                if(myShit.isAdmin){
+                    console.log('Admin')
+                    //do admin things 
+                }else{
+                    console.log('Customer')
+                    //do customer things
+                }
+                myShit.forward('.pizzaListContainer')
+            })
+        }catch(err){
             console.log(err)
         }
     },
@@ -308,7 +336,60 @@ let myShit = {
         fieldFirstName.value = userData.firstName
         fieldLastName.value = userData.lastName
         fieldEmail.value = userData.email
-    }
+
+        myShit.id = userData._id
+    },
+    changePassword:function() {
+        try{
+            let email = document.getElementById('staticEmail').value
+            let firstCopy = document.getElementById('newPassword').value
+            let secondCopy = document.getElementById('retypeNewPassword').value
+            if(firstCopy === secondCopy){
+                console.log("MATCHED!")
+                myShit.setNewPassword(firstCopy)
+            }else{
+                throw new Error('Passwords dont match')
+            }
+        }catch(err){
+            console.log(err)
+        }
+    },
+    setNewPassword: function(password){ 
+        try{
+            // _id:myShit.id,
+
+            body = {
+                password:password
+            }
+            let option = {
+                method: 'PATCH',
+                mode: 'cors',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'bearer': myShit.token.data
+                },
+                body:JSON.stringify(body)
+            }
+
+            fetch(myShit.url+ "auth/users", option)
+            .then((res)=>{
+                return res.json()
+            })
+            .then((res)=>{
+                console.log(res);
+            })
+        }catch(err){
+            console.log(err)
+        }
+    },
+    ///////////////////////////////
+    ///     Page Forwarding     ///
+    ///////////////////////////////
+    forward:function(page){
+        document.querySelector('.modal').style.display = 'none'
+        document.querySelector('.display').classList.remove('display')
+        document.querySelector(page).classList.add('display')
+    },
 }
 
 front.start();
