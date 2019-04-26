@@ -1,17 +1,17 @@
-let front = {
+let frontEnd = {
         pages: [],
         show: new Event('show'),
         admin: true,
 
         start: function () {
-            document.addEventListener("DOMContentLoaded", front.init);
+            document.addEventListener("DOMContentLoaded", frontEnd.init);
         },
 
         init: function () {
-            front.pageSwitch();
-            front.addListeners();
+            frontEnd.pageSwitch();
+            frontEnd.addListeners();
             // showAdmin();
-            myShit.findAllPizzas();
+            backEnd.findAllPizzas();
 
         },
 
@@ -20,8 +20,8 @@ let front = {
             let signIn_Btn = document.getElementById('signIn')
 
             // document.querySelector('.confirmBtn').addEventListener('click', doLogin);
-            signUpSubmit_Btn.addEventListener('click', myShit.postNewUser)
-            signIn_Btn.addEventListener('click', myShit.loginUser)
+            signUpSubmit_Btn.addEventListener('click', backEnd.postNewUser)
+            signIn_Btn.addEventListener('click', backEnd.loginUser)
 
 
             let signInBtn = document.querySelector('.signInBtn'),
@@ -51,7 +51,7 @@ let front = {
 
             let togglePassword = document.getElementById("togglePassword");
 
-            togglePassword.addEventListener('change', front.showPassword);
+            togglePassword.addEventListener('change', frontEnd.showPassword);
 
 
 
@@ -60,14 +60,14 @@ let front = {
         pageSwitch: function () {
             pages = document.querySelectorAll('.page');
             pages.forEach((pg) => {
-                pg.addEventListener('show', front.pageShown);
+                pg.addEventListener('show', frontEnd.pageShown);
             })
 
             document.querySelectorAll('.nav-link').forEach((link) => {
-                link.addEventListener('click', front.navigate);
+                link.addEventListener('click', frontEnd.navigate);
             })
             history.replaceState({}, 'Home', '#homePage');
-            window.addEventListener('popstate', front.poppin);
+            window.addEventListener('popstate', frontEnd.poppin);
         },
 
         navigate: function (ev) {
@@ -77,7 +77,7 @@ let front = {
             document.getElementById(currentPage).classList.add('display');
             console.log(currentPage)
             history.pushState({}, currentPage, `#${currentPage}`);
-            document.getElementById(currentPage).dispatchEvent(front.show);
+            document.getElementById(currentPage).dispatchEvent(frontEnd.show);
         },
 
         pageShown: function (ev) {
@@ -96,7 +96,7 @@ let front = {
             document.getElementById(hash).classList.add('display');
             console.log(hash)
             history.pushState({}, currentPage, `#${currentPage}`);
-            document.getElementById(hash).dispatchEvent(front.show);
+            document.getElementById(hash).dispatchEvent(frontEnd.show);
         },
 
         //show password checkbox
@@ -145,7 +145,7 @@ let front = {
         },
     }
 
-        let myShit = {
+        let backEnd = {
 
     isAdmin:false,
     isLoggedIn:false,
@@ -160,25 +160,25 @@ let front = {
 
     //finding pizzas
     findAllPizzas:function(){
-        fetch(myShit.url+"pizzas/")
+        fetch(backEnd.url+"pizzas/")
         .then((res) => {
             return res.json()
         })
         .then((res)=> {
             // console.log(res)
-            myShit.buildPizzaList(res)
+            backEnd.buildPizzaList(res)
         })
 
     },
     findAPizza: function (ev) {
         let id = ev.target.getAttribute('data-id')
 
-        fetch(myShit.url + "pizzas/" + id)
+        fetch(backEnd.url + "pizzas/" + id)
             .then((res) => {
                 return res.json()
             })
             .then((res) => {
-                myShit.editingPizza(res)
+                backEnd.editingPizza(res)
             })
     },
     //making the pizzas appear on the page
@@ -234,8 +234,8 @@ let front = {
 
             table.appendChild(row)
             // console.log(item)
-            remove.addEventListener('click', myShit.deletePizza)
-            edit.addEventListener('click', myShit.findAPizza)
+            remove.addEventListener('click', backEnd.deletePizza)
+            edit.addEventListener('click', backEnd.findAPizza)
         })
     },
 
@@ -243,7 +243,7 @@ let front = {
     
     //editing pizzas
     editingPizza:function(){
-        // myShit.forward('.')
+        // backEnd.forward('.')
     },
     //deleting pizzas
     deletePizza:function(ev){
@@ -253,10 +253,10 @@ let front = {
                 mode: 'cors',
                 headers:{
                     'Content-Type': 'application/json',
-                    'bearer' : myShit.token
+                    'bearer' : backEnd.token
                 },
             }
-            fetch(myShit.url+'pizzas/' + id, option)
+            fetch(backEnd.url+'pizzas/' + id, option)
             .then((res)=>{
                 return res.json()
             })
@@ -264,7 +264,7 @@ let front = {
                 console.log(res)
                 let box = ev.target.parentElement.parentElement.parentElement
                 box.innerHTML = " "
-                myShit.findAllPizzas()
+                backEnd.findAllPizzas()
             })
     },
 
@@ -272,12 +272,12 @@ let front = {
     ///     INGREDIENTS FUNCTIONS   ///
     ///////////////////////////////////
     getAllIngredients:function(){
-        fetch(myShit.url+"ingredients/")
+        fetch(backEnd.url+"ingredients/")
         .then((res) => {
             return res.json()
         })
         .then((res)=> {
-            myShit.buildIngredientsList(res)
+            backEnd.buildIngredientsList(res)
         })
         .catch((err)=>{
             console.log(err)
@@ -337,8 +337,8 @@ let front = {
 
             table.appendChild(row)
             // console.log(item)
-            remove.addEventListener('click', myShit.deleteIngredient)
-            // edit.addEventListener('click', myShit.findAPizza)
+            remove.addEventListener('click', backEnd.deleteIngredient)
+            // edit.addEventListener('click', backEnd.findAPizza)
         })
     },
 
@@ -350,10 +350,10 @@ let front = {
                 mode: 'cors',
                 headers:{
                     'Content-Type': 'application/json',
-                    'bearer' : myShit.token
+                    'bearer' : backEnd.token
                 },
             }
-            fetch(myShit.url+'ingredients/' + id, option)
+            fetch(backEnd.url+'ingredients/' + id, option)
             .then((res)=>{
                 return res.json()
             })
@@ -361,7 +361,7 @@ let front = {
                 console.log(res)
                 let box = ev.target.parentElement.parentElement.parentElement
                 box.innerHTML = " "
-                myShit.getAllIngredients()
+                backEnd.getAllIngredients()
             })
     },
 
@@ -392,7 +392,7 @@ let front = {
             },
             body: JSON.stringify(newUser)
         }
-        fetch(myShit.url + "auth/users", option)
+        fetch(backEnd.url + "auth/users", option)
             .then((res) => {
                 return res.json()
             })
@@ -416,7 +416,7 @@ let front = {
             body: JSON.stringify(login)
         }
         try {
-            fetch(myShit.url + "auth/users/token", option)
+            fetch(backEnd.url + "auth/users/token", option)
 
             .then((res) => {
                 return res.json()
@@ -425,11 +425,11 @@ let front = {
                 if(res.error){
                     console.log('error')
                 }else{
-                    myShit.token = res.data
-                    myShit.isLoggedIn = true;
+                    backEnd.token = res.data
+                    backEnd.isLoggedIn = true;
 
-                    localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
-                    setTimeout(myShit.getUserInfo, 1500)        
+                    localStorage.setItem('bearer', JSON.stringify(backEnd.token.data))
+                    setTimeout(backEnd.getUserInfo, 1500)        
                     console.log("sucess")
                 }
             })
@@ -450,30 +450,30 @@ let front = {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                'bearer': myShit.token
+                'bearer': backEnd.token
             }
         }
         try {
-            fetch(myShit.url + "auth/users/me", option)
+            fetch(backEnd.url + "auth/users/me", option)
 
             .then((res) => {
                 return res.json()
             })
             .then((data) =>{
-                myShit.isAdmin = data.data.isStaff
+                backEnd.isAdmin = data.data.isStaff
 
-                myShit.profileBuilder(data.data)
+                backEnd.profileBuilder(data.data)
                 
-                if(myShit.isAdmin){
+                if(backEnd.isAdmin){
                     console.log('Admin')
                     //do admin things 
-                    myShit.getAllIngredients()
+                    backEnd.getAllIngredients()
 
                 }else{
                     console.log('Customer')
                     //do customer things
                 }
-                myShit.forward('.pizzaListContainer')
+                backEnd.forward('.pizzaListContainer')
             })
         }catch(err){
             console.log(err)
@@ -488,7 +488,7 @@ let front = {
         fieldLastName.value = userData.lastName
         fieldEmail.value = userData.email
 
-        myShit.id = userData._id
+        backEnd.id = userData._id
     },
     changePassword:function() {
         try{
@@ -497,7 +497,7 @@ let front = {
             let secondCopy = document.getElementById('retypeNewPassword').value
             if(firstCopy === secondCopy){
                 console.log("MATCHED!")
-                myShit.setNewPassword(firstCopy)
+                backEnd.setNewPassword(firstCopy)
             }else{
                 console.log('Passwords didnt match')
             }
@@ -507,7 +507,7 @@ let front = {
     },
     setNewPassword: function(password){ 
         try{
-            // _id:myShit.id,
+            // _id:backEnd.id,
 
             body = {
                 password:password
@@ -517,12 +517,12 @@ let front = {
                 mode: 'cors',
                 headers:{
                     'Content-Type': 'application/json',
-                    'bearer': myShit.token.data
+                    'bearer': backEnd.token.data
                 },
                 body:JSON.stringify(body)
             }
 
-            fetch(myShit.url+ "auth/users", option)
+            fetch(backEnd.url+ "auth/users", option)
             .then((res)=>{
                 return res.json()
             })
@@ -543,4 +543,4 @@ let front = {
     },
 }
 
-front.start();
+frontEnd.start();
