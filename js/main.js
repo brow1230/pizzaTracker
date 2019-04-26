@@ -103,10 +103,11 @@ let myShit = {
     //base URL,
     url:"http://localhost:3030/api/",
     //basic GET request for pizza
-    ///////////////////
-    /// FIND PIZZAS ///
-    ///////////////////
+    /////////////////////////
+    ///  PIZZAS FUNCTIONS ///
+    /////////////////////////
 
+    //finding pizzas
     findAllPizzas:function(){
         fetch(myShit.url+"pizzas/")
         .then((res) => {
@@ -182,9 +183,38 @@ let myShit = {
             table.appendChild(row)
 
             console.log(item)
-            remove.addEventListener('click', myShit.findAPizza)
+            remove.addEventListener('click', myShit.deletePizza)
             edit.addEventListener('click', myShit.findAPizza)
         })
+    },
+
+    //adding new pizzas
+
+    //editing pizzas
+
+    //deleting pizzas
+    deletePizza:function(ev){
+        console.log('uhm stuck?')
+        let id = ev.target.getAttribute('data-id')
+            let option = {
+                method: 'DELETE',
+                mode: 'cors',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'bearer' : myShit.token
+                },
+            }
+            fetch(myShit.url+'pizzas/' + id, option)
+            .then((res)=>{
+                return res.json()
+            })
+            .then((res)=>{
+                console.log(res)
+                let box = ev.target.parentElement.parentElement.parentElement
+                box.innerHTML = " "
+                myShit.findAllPizzas()
+                // console.log()
+            })
     },
 
 
@@ -248,7 +278,7 @@ let myShit = {
                 if(res.error){
                     console.log('error')
                 }else{
-                    myShit.token = res
+                    myShit.token = res.data
                     myShit.isLoggedIn = true;
                     // console.log(myShit.token)
                     // console.log(myShit.token.data)
@@ -276,7 +306,7 @@ let myShit = {
             mode: 'cors',
             headers:{
                 'Content-Type': 'application/json',
-                'bearer': myShit.token.data
+                'bearer': myShit.token
             }
         }
         try{
