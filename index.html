@@ -12,7 +12,7 @@
     <title>PizzaTracker </title>
 </head>
 
-<body>
+<body id='body'>
 
     <!------------------------------HOME PAGE------------------------------>
     <section class="page display" id="homePage">
@@ -36,9 +36,11 @@
                         </li>
                         <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery </li>
                         <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="profile">Profile</li>
                         <li class="nav-link list-group-item list-group-item-action" data-target="admin/pizzas">Pizza
                             List</li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="profile">Profile</li>
+                        <li class="nav-link list-group-item list-group-item-action" data-target="admin/ingredients">Ingredient List
+                            </li>
                     </ul>
                 </section>
                 <!--SIDEBAR NAV MENU END -->
@@ -47,8 +49,6 @@
                     <p>moretext</p>
                 </section>
             </div>
-
-
     </section>
     </main>
     <!---MAIN CONTENT END-->
@@ -262,7 +262,7 @@
             </a>
             <!--SIGN IN BUTTON-->
             <form class="form" id="formLogin">
-                <button type="button" class="signInBtn btn btn-dark">Sign In</button>
+                <button type="button" class="nav-link signInBtn btn btn-dark" data-target="admin/piza-edit">Sign In</button>
             </form>
         </nav>
         <!--MAIN CONTENT START-->
@@ -299,44 +299,53 @@
             </div>
         </main>
     </section>
-
-    <section class="page" id="Add/Edit">
-        <!--BRAND HEADER-->
-        <nav class="navbar navbar sticky-top navbar-dark ">
-            <a class="navbar-brand" href="#">
-            </a>
-            <!--SIGN IN BUTTON-->
-            <form class="form" id="formLogin">
-                <button type="button" class="signInBtn btn btn-dark">Sign In</button>
-
-            </form>
-        </nav>
-        <!--MAIN CONTENT START-->
-        <main id="homeContainer">
-            <div class="row">
-                <!--SIDEBAR NAV MENU-->
-                <section class="col-md-2" id="menu">
-                    <ul class="list-group list-group-flush" id="menuList">
-                        <li class="nav-link list-group-item active list-group-item-action" data-target="homePage">
-                            Home
-                        </li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery
-                        </li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us
-                        </li>
-                        <li class="nav-link list-group-item list-group-item-action" data-target="admin/pizzas">Pizza
-                            List</li>
-                    </ul>
-                </section>
-                <!--SIDEBAR NAV MENU END -->
-                <section class="content col-md-10">
-                    <h1 id="text">BrandonBrowns Pizza</h1>
-                    <p>moretext</p>
-                </section>
-            </div>
-        </main>
-
-    </section>
+    
+        <!------------------------------ADMIN INGREDIENT LIST------------------------------>
+        <section class="page" id="admin/ingredients">
+            <!--BRAND HEADER-->
+            <nav class="navbar navbar sticky-top navbar-dark ">
+                <a class="navbar-brand" href="#">
+                </a>
+                <!--SIGN IN BUTTON-->
+                <form class="form" id="formLogin">
+                    <button type="button" class="signInBtn btn btn-dark">Sign In</button>
+                </form>
+            </nav>
+            <!--MAIN CONTENT START-->
+            <main id="adminPizzaContainer">
+                <div class="row">
+                    <!--SIDEBAR NAV MENU-->
+                    <section class="col-md-2" id="menu">
+                        <ul class="list-group list-group-flush" id="menuList">
+                            <li class="nav-link list-group-item active list-group-item-action" data-target="homePage">
+                                Home
+                            </li>
+                            <li class="nav-link list-group-item list-group-item-action" data-target="page2">Gallery
+                            </li>
+                            <li class="nav-link list-group-item list-group-item-action" data-target="page3">About Us
+                            </li>
+                        </ul>
+                    </section>
+                    <!--SIDEBAR NAV MENU END -->
+                    <section class="content col-md-10">
+                        <h1 id="text">Pizzas</h1>
+                        <button type="button" class="nav-link btn btn-dark mb-5" data-target="admin/ingredient-edit">Add New Ingredient</button>
+                        <table class="table table-hover ">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price($)</th>
+                                    <th scope="col">Gluten Free</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pizzaList"></tbody>
+                        </table>
+                    </section>
+                </div>
+            </main>
+        </section>
+    
 
     <!------------------------------MODAL WINDOW------------------------------>
 
