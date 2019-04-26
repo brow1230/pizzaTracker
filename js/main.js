@@ -253,7 +253,7 @@ let frontEnd = {
                 mode: 'cors',
                 headers:{
                     'Content-Type': 'application/json',
-                    'bearer' : backEnd.token
+                    'Authorization': 'Bearer ' + myShit.token
                 },
             }
             fetch(backEnd.url+'pizzas/' + id, option)
@@ -350,7 +350,7 @@ let frontEnd = {
                 mode: 'cors',
                 headers:{
                     'Content-Type': 'application/json',
-                    'bearer' : backEnd.token
+                    'Authorization': 'Bearer ' + myShit.token
                 },
             }
             fetch(backEnd.url+'ingredients/' + id, option)
@@ -450,7 +450,7 @@ let frontEnd = {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                'bearer': backEnd.token
+                'Authorization': 'Bearer ' + myShit.token
             }
         }
         try {
@@ -517,7 +517,7 @@ let frontEnd = {
                 mode: 'cors',
                 headers:{
                     'Content-Type': 'application/json',
-                    'bearer': backEnd.token.data
+                    'Authorization': 'Bearer ' + myShit.token
                 },
                 body:JSON.stringify(body)
             }
