@@ -148,273 +148,307 @@ let front = {
 
         let myShit = {
 
-            isAdmin: false,
-            isLoggedIn: false,
-            id: null,
-            token: null,
-            //base URL,
-            url: "http://localhost:3030/api/",
-            //basic GET request for pizza
+    isAdmin:false,
+    isLoggedIn:false,
+    id:null,
+    token:null,
+    //base URL,
+    url: "http://localhost:3030/api/",
+    //basic GET request for pizza
+    /////////////////////////
+    ///  PIZZAS FUNCTIONS ///
+    /////////////////////////
 
-            ///////////////////
-            /// FIND PIZZAS ///
-            ///////////////////
+    //finding pizzas
+    findAllPizzas:function(){
+        fetch(myShit.url+"pizzas/")
+        .then((res) => {
+            return res.json()
+        })
+        .then((res)=> {
+            console.log(res)
+            myShit.buildList(res)
+        })
 
-            findAllPizzas: function () {
-                fetch(myShit.url + "pizzas/")
-                    .then((res) => {
-                        return res.json()
-                    })
-                    .then((res) => {
-                        console.log(res)
-                        myShit.buildList(res)
-                    })
+    },
+    findAPizza: function (ev) {
+        let id = ev.target.getAttribute('data-id')
 
-            },
-            findAPizza: function (ev) {
-                let id = ev.target.getAttribute('data-id')
+        fetch(myShit.url + "pizzas/" + id)
+            .then((res) => {
+                return res.json()
+            })
+            .then((res) => {
+                console.log(res)
+            })
+    },
+    //making the pizzas appear on the page
+    buildList: function (res) {
+        res.data.forEach(function (item) {
+            //find the element for use later
+            let table = document.getElementById('pizzaList')
+            //creating elements for each item return from the fetch
+            let row = document.createElement('tr')
+            let name = document.createElement('td')
+            let price = document.createElement('td')
+            let gf = document.createElement('td')
+            let buttons = document.createElement('td')
+            let edit = document.createElement('button')
+            let remove = document.createElement('button')
+            let removeType = document.createAttribute('type')
+            let editType = document.createAttribute('type')
+            let removeID = document.createAttribute('data-id')
+            let editID = document.createAttribute('data-id')
+            let pizzaID = document.createAttribute('data-id')
 
-                fetch(myShit.url + "pizzas/" + id)
-                    .then((res) => {
-                        return res.json()
-                    })
-                    .then((res) => {
-                        console.log(res)
-                    })
-            },
-            //making the pizzas appear on the page
-            buildList: function (res) {
-                res.data.forEach(function (item) {
-                    //find the element for use later
-                    let table = document.getElementById('pizzaList')
-                    //creating elements for each item return from the fetch
-                    let row = document.createElement('tr')
-                    let name = document.createElement('td')
-                    let price = document.createElement('td')
-                    let gf = document.createElement('td')
-                    let buttons = document.createElement('td')
-                    let edit = document.createElement('button')
-                    let remove = document.createElement('button')
-                    let removeType = document.createAttribute('type')
-                    let editType = document.createAttribute('type')
-                    let removeID = document.createAttribute('data-id')
-                    let editID = document.createAttribute('data-id')
-                    let pizzaID = document.createAttribute('data-id')
+            //giving them all the values
+            name.textContent = item.name
+            price.textContent = item.price
+            editID.value = item._id
+            removeID.value = item._id
+            pizzaID.value = item._id
+            gf.textContent = "no"
+            edit.textContent = "Edit"
+            remove.textContent = "Delete"
+            editType.value = "button"
+            removeType.value = "button"
 
-                    //giving them all the values
-                    name.textContent = item.name
-                    price.textContent = item.price
-                    editID.value = item._id
-                    removeID.value = item._id
-                    pizzaID.value = item._id
-                    gf.textContent = "no"
-                    edit.textContent = "Edit"
-                    remove.textContent = "Delete"
-                    editType.value = "button"
-                    removeType.value = "button"
+            //adding classes and other attributes to the buttons
+            edit.classList.add('btn')
+            edit.classList.add('btn-dark')
+            edit.setAttributeNode(editID)
+            edit.setAttributeNode(editType)
 
-                    //adding classes and other attributes to the buttons
-                    edit.classList.add('btn')
-                    edit.classList.add('btn-dark')
-                    edit.setAttributeNode(editID)
-                    edit.setAttributeNode(editType)
+            remove.classList.add('btn')
+            remove.classList.add('btn-dark')
+            remove.setAttributeNode(removeID)
+            remove.setAttributeNode(removeType)
 
-                    remove.classList.add('btn')
-                    remove.classList.add('btn-dark')
-                    remove.setAttributeNode(removeID)
-                    remove.setAttributeNode(removeType)
+            //append child
+            buttons.appendChild(edit)
+            buttons.appendChild(remove)
 
-                    //append child
-                    buttons.appendChild(edit)
-                    buttons.appendChild(remove)
+            row.appendChild(name)
+            row.appendChild(price)
+            row.appendChild(gf)
+            row.appendChild(buttons)
 
-                    row.appendChild(name)
-                    row.appendChild(price)
-                    row.appendChild(gf)
-                    row.appendChild(buttons)
+            table.appendChild(row)
 
-                    table.appendChild(row)
+            console.log(item)
+            remove.addEventListener('click', myShit.deletePizza)
+            edit.addEventListener('click', myShit.findAPizza)
+        })
+    },
 
-                    console.log(item)
-                    remove.addEventListener('click', myShit.findAPizza)
-                    edit.addEventListener('click', myShit.findAPizza)
-                })
-            },
-            //Post request to /users  //////\\\\\\ Makes New User 
-            postNewUser: function () {
-                let isStaff = null
-                let value = document.getElementById('accountType').value
-                isStaff = false
-                if (value != "false") {
-                    isStaff = true
-                }
-                let newUser = {
-                    "firstName": document.getElementById('firstName').value,
-                    "lastName": document.getElementById('lastName').value,
-                    "password": document.getElementById('password').value,
-                    "email": document.getElementById('email').value,
-                    "isStaff": isStaff,
-                }
-                let option = {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(newUser)
-                }
-                fetch(myShit.url + "auth/users", option)
-                    .then((res) => {
-                        return res.json()
-                    })
-                    .then((data) => {
-                        console.log(data)
-                    })
-                console.log(newUser)
-            },
-            //Post reqiest to /users/token /////\\\\\ Login funciton
-            loginUser: function () {
-                let login = {
-                    email: document.getElementById('userEmail').value,
-                    password: document.getElementById('userPassword').value
-                }
-                let option = {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(login)
-                }
-                try {
-                    fetch(myShit.url + "auth/users/token", option)
+    //adding new pizzas
 
-                        .then((res) => {
-                            console.log(res)
-                            return res.json()
-                        })
-                        .then((res) => {
-                            console.log(res)
-                            if (res.error) {
-                                console.log('error')
-                            } else {
-                                myShit.token = res
-                                myShit.isLoggedIn = true;
-                                // console.log(myShit.token)
-                                // console.log(myShit.token.data)
-                                localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
-                                setTimeout(myShit.getUserInfo, 1500)
-                                console.log("sucess")
-                            }
-                        })
-                } catch (err) {
-                    console.log("something happened!--------------------------------")
-                    console.log(err)
-                }
-            },
+    //editing pizzas
 
-            ////////////////////////////////////////////////
-            ///     USER PROFILE, PASSWORD CHANGING      ///
-            ////////////////////////////////////////////////
-
-            //GET user profile info
-            getUserInfo: function () {
+    //deleting pizzas
+    deletePizza:function(ev){
+        console.log('uhm stuck?')
+        let id = ev.target.getAttribute('data-id')
+            let option = {
+                method: 'DELETE',
+                mode: 'cors',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'bearer' : myShit.token
+                },
+            }
+            fetch(myShit.url+'pizzas/' + id, option)
+            .then((res)=>{
+                return res.json()
+            })
+            .then((res)=>{
+                console.log(res)
+                let box = ev.target.parentElement.parentElement.parentElement
+                box.innerHTML = " "
+                myShit.findAllPizzas()
+                // console.log()
+            })
+    },
 
 
-                let option = {
-                    method: 'GET',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'bearer': myShit.token.data
-                    }
-                }
-                try {
-                    fetch(myShit.url + "auth/users/me", option)
-
-                        .then((res) => {
-                            return res.json()
-                        })
-                        .then((data) => {
-                            myShit.isAdmin = data.data.isStaff
-
-                            myShit.profileBuilder(data.data)
-
-                            if (myShit.isAdmin) {
-                                console.log('Admin')
-                                //do admin things 
-                            } else {
-                                console.log('Customer')
-                                //do customer things
-                            }
-                            myShit.forward('.pizzaListContainer')
-                        })
-                } catch (err) {
-                    console.log(err)
-                }
-            },
-            profileBuilder: function (userData) {
-                let fieldFirstName = document.getElementById('staticFirstName')
-                let fieldLastName = document.getElementById('staticLastName')
-                let fieldEmail = document.getElementById('staticEmail')
-
-                fieldFirstName.value = userData.firstName
-                fieldLastName.value = userData.lastName
-                fieldEmail.value = userData.email
-
-                myShit.id = userData._id
-            },
-            changePassword: function () {
-                try {
-                    let email = document.getElementById('staticEmail').value
-                    let firstCopy = document.getElementById('newPassword').value
-                    let secondCopy = document.getElementById('retypeNewPassword').value
-                    if (firstCopy === secondCopy) {
-                        console.log("MATCHED!")
-                        myShit.setNewPassword(firstCopy)
-                    } else {
-                        throw new Error('Passwords dont match')
-                    }
-                } catch (err) {
-                    console.log(err)
-                }
-            },
-            setNewPassword: function (password) {
-                try {
-                    // _id:myShit.id,
-
-                    body = {
-                        password: password
-                    }
-                    let option = {
-                        method: 'PATCH',
-                        mode: 'cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'bearer': myShit.token.data
-                        },
-                        body: JSON.stringify(body)
-                    }
-
-                    fetch(myShit.url + "auth/users", option)
-                        .then((res) => {
-                            return res.json()
-                        })
-                        .then((res) => {
-                            console.log(res);
-                        })
-                } catch (err) {
-                    console.log(err)
-                }
-            },
-            ///////////////////////////////
-            ///     Page Forwarding     ///
-            ///////////////////////////////
-            forward: function (page) {
-                document.querySelector('.modal').style.display = 'none'
-                document.querySelector('.display').classList.remove('display')
-                document.querySelector(page).classList.add('display')
-            },
+    /////////////////////////////
+    /// MAKE NEW USER ACCOUNT ///
+    /////////////////////////////
+    //Post request to /users  //////\\\\\\ Makes New User 
+    postNewUser: function () {
+        let isStaff = null
+        let value = document.getElementById('accountType').value
+        isStaff = false
+        if (value != "false") {
+            isStaff = true
         }
+        let newUser = {
+            "firstName": document.getElementById('firstName').value,
+            "lastName": document.getElementById('lastName').value,
+            "password": document.getElementById('password').value,
+            "email": document.getElementById('email').value,
+            "isStaff": isStaff,
+        }
+        let option = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+        }
+        fetch(myShit.url + "auth/users", option)
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+            })
+        console.log(newUser)
+    },
+    //Post reqiest to /users/token /////\\\\\ Login funciton
+    loginUser: function () {
+        let login = {
+            email: document.getElementById('userEmail').value,
+            password: document.getElementById('userPassword').value
+        }
+        let option = {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(login)
+        }
+        try {
+            fetch(myShit.url + "auth/users/token", option)
 
-        front.start();
+            .then((res) => {
+                console.log(res)
+                return res.json()
+            })
+            .then((res) => {
+                console.log(res)
+                if(res.error){
+                    console.log('error')
+                }else{
+                    myShit.token = res.data
+                    myShit.isLoggedIn = true;
+                    // console.log(myShit.token)
+                    // console.log(myShit.token.data)
+                    localStorage.setItem('bearer', JSON.stringify(myShit.token.data))
+                    setTimeout(myShit.getUserInfo, 1500)        
+                    console.log("sucess")
+                }
+            })
+        } catch (err) {
+            console.log("something happened!--------------------------------")
+            console.log(err)
+        }
+    },
+
+    ////////////////////////////////////////////////
+    ///     USER PROFILE, PASSWORD CHANGING      ///
+    ////////////////////////////////////////////////
+
+    //GET user profile info
+    getUserInfo: function () {
+
+
+        let option = {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'bearer': myShit.token
+            }
+        }
+        try {
+            fetch(myShit.url + "auth/users/me", option)
+
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) =>{
+                myShit.isAdmin = data.data.isStaff
+
+                myShit.profileBuilder(data.data)
+                
+                if(myShit.isAdmin){
+                    console.log('Admin')
+                    //do admin things 
+                }else{
+                    console.log('Customer')
+                    //do customer things
+                }
+                myShit.forward('.pizzaListContainer')
+            })
+        }catch(err){
+            console.log(err)
+        }
+    },
+    profileBuilder: function (userData) {
+        let fieldFirstName = document.getElementById('staticFirstName')
+        let fieldLastName = document.getElementById('staticLastName')
+        let fieldEmail = document.getElementById('staticEmail')
+
+        fieldFirstName.value = userData.firstName
+        fieldLastName.value = userData.lastName
+        fieldEmail.value = userData.email
+
+        myShit.id = userData._id
+    },
+    changePassword:function() {
+        try{
+            let email = document.getElementById('staticEmail').value
+            let firstCopy = document.getElementById('newPassword').value
+            let secondCopy = document.getElementById('retypeNewPassword').value
+            if(firstCopy === secondCopy){
+                console.log("MATCHED!")
+                myShit.setNewPassword(firstCopy)
+            }else{
+                throw new Error('Passwords dont match')
+            }
+        }catch(err){
+            console.log(err)
+        }
+    },
+    setNewPassword: function(password){ 
+        try{
+            // _id:myShit.id,
+
+            body = {
+                password:password
+            }
+            let option = {
+                method: 'PATCH',
+                mode: 'cors',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'bearer': myShit.token.data
+                },
+                body:JSON.stringify(body)
+            }
+
+            fetch(myShit.url+ "auth/users", option)
+            .then((res)=>{
+                return res.json()
+            })
+            .then((res)=>{
+                console.log(res);
+            })
+        }catch(err){
+            console.log(err)
+        }
+    },
+    ///////////////////////////////
+    ///     Page Forwarding     ///
+    ///////////////////////////////
+    forward:function(page){
+        document.querySelector('.modal').style.display = 'none'
+        document.querySelector('.display').classList.remove('display')
+        document.querySelector(page).classList.add('display')
+    },
+}
+
+front.start();
