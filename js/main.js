@@ -234,7 +234,7 @@ let front = {
     },
 
     //adding new pizzas
-
+    
     //editing pizzas
     editingPizza:function(){
         // myShit.forward('.')
@@ -265,7 +265,7 @@ let front = {
     ///////////////////////////////////
     ///     INGREDIENTS FUNCTIONS   ///
     ///////////////////////////////////
-    getIngredients:function(){
+    getAllIngredients:function(){
         fetch(myShit.url+"ingredients/")
         .then((res) => {
             return res.json()
@@ -277,7 +277,7 @@ let front = {
             console.log(err)
         })
     },
-    // ingredientsListContainer
+
     //Building Ingredients List
     buildIngredientsList: function (res) {
         res.data.forEach(function (item) {
@@ -331,10 +331,35 @@ let front = {
 
             table.appendChild(row)
             // console.log(item)
-            // remove.addEventListener('click', myShit.deletePizza)
+            remove.addEventListener('click', myShit.deleteIngredient)
             // edit.addEventListener('click', myShit.findAPizza)
         })
     },
+
+    //Delete One Ingrident
+    deleteIngredient:function(ev){
+        let id = ev.target.getAttribute('data-id')
+            let option = {
+                method: 'DELETE',
+                mode: 'cors',
+                headers:{
+                    'Content-Type': 'application/json',
+                    'bearer' : myShit.token
+                },
+            }
+            fetch(myShit.url+'ingredients/' + id, option)
+            .then((res)=>{
+                return res.json()
+            })
+            .then((res)=>{
+                console.log(res)
+                let box = ev.target.parentElement.parentElement.parentElement
+                box.innerHTML = " "
+                myShit.getAllIngredients()
+            })
+    },
+
+
     /////////////////////////////
     /// MAKE NEW USER ACCOUNT ///
     /////////////////////////////
@@ -436,7 +461,7 @@ let front = {
                 if(myShit.isAdmin){
                     console.log('Admin')
                     //do admin things 
-                    myShit.getIngredients()
+                    myShit.getAllIngredients()
 
                 }else{
                     console.log('Customer')
