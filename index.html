@@ -113,7 +113,7 @@
                             </div>
                             <button type="submit" class="nav-link float-right btn btn-primary" id="signUpSubmit"
                                 data-target="homePage">Submit</button>
-                            </form>
+                        </form>
                     </div>
             </div>
         </main>
@@ -135,45 +135,51 @@
                     </ul>
                 </section>
                 <!--SIDEBAR NAV MENU END -->
-                <section class="content col-md-10">
-                    <h1 id="text">Change Password</h1>
-                    <form id="profileForm">
-                        <div class="form-group row" id="userProfileContainer">
-                            <label for="staticFirstName" class="col-sm-2 col-form-label">First Name:</label>
-                            <div class="col-sm-5">
-                                <input type="text" readonly class="form-control-plaintext" id="staticFirstName"
-                                    value="First Name">
+                <section class="content col-md-10 ">
+                    <div class="container col-md-5">
+                        <h1 id="text">Change Password</h1>
+                        <form id="profileForm">
+                            <div class="form-group row" id="">
+                                <label for="staticFirstName" class="col-md-5 col-form-label">First Name:</label>
+                                <div class="">
+                                    <input type="text" readonly class="form-control-plaintext" id="staticFirstName"
+                                        value="First Name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row" id="userProfileContainer">
-                            <label for="staticLastName" class="col-sm-2 col-form-label">Last Name:</label>
-                            <div class="col-sm-5">
-                                <input type="text" readonly class="form-control-plaintext" id="staticLastName"
-                                    value="Last Name">
+                            <div class="form-group row" id="">
+                                <label for="staticLastName" class="col-md-5 col-form-label">Last Name:</label>
+                                <div class="">
+                                    <input type="text" readonly class="form-control-plaintext" id="staticLastName"
+                                        value="Last Name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row" id="userProfileContainer">
-                            <label for="staticEmail" class="col-sm-2 col-form-label">Email Placeholder</label>
-                            <div class="col-sm-5">
-                                <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                    value="email@example.com">
+                            <div class="form-group row" id="">
+                                <label for="staticEmail" class="col-md-5 col-form-label">Email Placeholder</label>
+                                <div class="">
+                                    <input type="text" readonly class="form-control-plaintext" id="staticEmail"
+                                        value="email@example.com">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row" id="userProfileContainer">
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                            <div class="col-sm-5">
-                                <input type="password" class="form-control" id="newPassword" placeholder="Password">
+                            <div class="form-group row mt-3" id="">
+                                <label for="inputPassword" class="col-md-5 col-form-label">New Password:</label>
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" id="newPassword" placeholder="Password">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row" id="userProfileContainer">
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Retype Password</label>
-                            <div class="col-sm-5">
-                                <input type="password" class="form-control" id="retypeNewPassword"
-                                    placeholder="Password">
+                            <div class="form-group row" id="">
+                                <label for="inputPassword" class="col-md-5 col-form-label">Retype New Password:</label>
+                                <div class="col-md-10">
+                                    <input type="password" class="form-control" id="retypeNewPassword"
+                                        placeholder="Password">
+                                    <div class="form-check mt-1">
+                                        <input type="checkbox" class="form-check-input" id="togglePassword">
+                                        <label class="form-check-label" for="exampleCheck1">Show Password</label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                    <button class="btn btn-dark mb-5" id="changePasswordBtn">Submit</button>
+                            <button class="btn btn-dark mb-5 float-right" id="changePasswordBtn">Submit</button>
+                        </form>
+                    </div>
                 </section>
             </div>
         </main>

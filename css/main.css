@@ -173,19 +173,21 @@
 
 /*********************************profile page ********************************/
 
-#profileForm{
+/* #profileForm{
     text-align: left;
 }
 #userProfileContainer{
-    display:flex;
+    
+    display:flex; */
     /* flex-direction: column; */
-    justify-content: space-evenly;
-}
+    /* justify-content: space-evenly; */
+
+/* }
 #changePasswordBtn{
     float:right;
     margin-right:13rem;
     margin-top:2rem;
-}
+} */
 
 @media (max-width: 576px) { /* need this for nav menu on mobile  */
     #menuList {
