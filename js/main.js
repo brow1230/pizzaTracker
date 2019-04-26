@@ -119,24 +119,30 @@ let front = {
 
         userNotification: function () {
 
-            let modaldiv = document.createElement('div')
-            modaldiv.classList.add('userAlert')
+            let modaldiv = document.createElement('div'),
+                closeBtn = document.createElement('button'),
+                span = document.createElement('span');
 
-            let child = document.createElement('div')
-            child.classList.add('child')
+            modaldiv.setAttribute('class','userAlert alert ')
+            closeBtn.setAttribute('type','button');
+            closeBtn.setAttribute('class','close');
+            closeBtn.setAttribute('data-dismiss','alert');
+            closeBtn.setAttribute('aria-label','Close');
+
+            // span.setAttribute('aria-hidden','true');
+            span.textContent = 'x';
 
 
-            modaldiv.appendChild(child)
-            document.body.appendChild(modaldiv)
+            modaldiv.appendChild(closeBtn);
+            closeBtn.appendChild(span);
+            document.body.appendChild(modaldiv);
+            
+            
+            window.setTimeout(function() {
+                $(".userAlert").alert('close')
+            }, 5000);
+
         },
-
-        removeNotifiction: function () {
-            // find the modal and remove if it exists
-            let userAlert= document.querySelector('.userAlert')
-            if (userAlert) {
-                userAlert.remove()
-            }
-        }
     }
 
         let myShit = {

@@ -204,29 +204,15 @@
 
 
 
-  .child {
+.userAlert{
     top: 50%;
     left: 50%;
     width: 500px;
     height: 200px;
-    background: red;
     position: absolute;
     transform: translate(-50%, -50%);
     animation-name: alert;
     animation-duration: .8s;
-
-    
-    
-  }
-
-  .userNote{
-    top: 0%;
-    left: 0%;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
-    
   }
 
   @keyframes alert {
