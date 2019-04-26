@@ -1,32 +1,32 @@
 let front = {
-    pages:[],
+    pages: [],
     show: new Event('show'),
     admin: true,
 
-    start: function(){
+    start: function () {
         document.addEventListener("DOMContentLoaded", front.init);
     },
-    
-    init: function(){ 
+
+    init: function () {
         front.pageSwitch();
         front.addListeners();
         // showAdmin();
         myShit.findAllPizzas();
+
     },
 
-    addListeners: function() {
-        let passChanging_Btn = document.getElementById('changePasswordBtn')
+    addListeners: function () {
         let signUpSubmit_Btn = document.getElementById('signUpSubmit')
         let signIn_Btn = document.getElementById('signIn')
-        
+
         // document.querySelector('.confirmBtn').addEventListener('click', doLogin);
         signUpSubmit_Btn.addEventListener('click', myShit.postNewUser)
         signIn_Btn.addEventListener('click', myShit.loginUser)
-        passChanging_Btn.addEventListener('click', myShit.changePassword)
+
 
         let signInBtn = document.querySelector('.signInBtn'),
-        modal = document.querySelector('.modal'),
-        closeBtn = document.querySelector('.closeBtn');
+            modal = document.querySelector('.modal'),
+            closeBtn = document.querySelector('.closeBtn');
         signUpBtn = document.querySelector('.signUpBtn');
 
         // Modela disla
@@ -49,14 +49,20 @@ let front = {
             modal.style.display = "none";
         })
 
+        let togglePassword = document.getElementById("togglePassword");
+
+        togglePassword.addEventListener('change', front.showPassword);
+
+        
+
     },
 
-    pageSwitch:function () {
+    pageSwitch: function () {
         pages = document.querySelectorAll('.page');
         pages.forEach((pg) => {
             pg.addEventListener('show', front.pageShown);
         })
-    
+
         document.querySelectorAll('.nav-link').forEach((link) => {
             link.addEventListener('click', front.navigate);
         })
@@ -64,17 +70,17 @@ let front = {
         window.addEventListener('popstate', front.poppin);
     },
 
-    navigate:function(ev) {
-    ev.preventDefault();
-    let currentPage = ev.target.getAttribute('data-target');
-    document.querySelector('.display').classList.remove('display');
-    document.getElementById(currentPage).classList.add('display');
-    console.log(currentPage)
-    history.pushState({}, currentPage, `#${currentPage}`);
-    document.getElementById(currentPage).dispatchEvent(front.show);
+    navigate: function (ev) {
+        ev.preventDefault();
+        let currentPage = ev.target.getAttribute('data-target');
+        document.querySelector('.display').classList.remove('display');
+        document.getElementById(currentPage).classList.add('display');
+        console.log(currentPage)
+        history.pushState({}, currentPage, `#${currentPage}`);
+        document.getElementById(currentPage).dispatchEvent(front.show);
     },
 
-    pageShown:function(ev){
+    pageShown: function (ev) {
         console.log('Page', ev.target.id, 'just shown');
         let h1 = ev.target.querySelector('h1');
         h1.classList.add('big')
@@ -83,7 +89,7 @@ let front = {
         }, 1200, h1);
     },
 
-    popping:function(ev) {
+    popping: function (ev) {
         console.log(location.hash, 'popstate event');
         let hash = location.hash.replace('#', '');
         document.querySelector('.display').classList.remove('display');
@@ -93,15 +99,36 @@ let front = {
         document.getElementById(hash).dispatchEvent(front.show);
     },
 
+
+
+    showPassword: function () {
+        let newPassword = document.getElementById("newPassword"),
+            retypeNewPassword = document.getElementById("retypeNewPassword");
+
+        if (newPassword.type === "password") {
+            newPassword.type = "text";
+        } else {
+            newPassword.type = "password";
+        }
+        if (retypeNewPassword.type === "password") {
+            retypeNewPassword.type = "text";
+
+        } else {
+            retypeNewPassword.type = "password";
+        }
+    },
+
+ 
 }
 
 let myShit = {
+
     isAdmin:false,
     isLoggedIn:false,
     id:null,
     token:null,
     //base URL,
-    url:"http://localhost:3030/api/",
+    url: "http://localhost:3030/api/",
     //basic GET request for pizza
     /////////////////////////
     ///  PIZZAS FUNCTIONS ///
@@ -117,21 +144,22 @@ let myShit = {
             console.log(res)
             myShit.buildList(res)
         })
+
     },
-    findAPizza:function(ev) {
+    findAPizza: function (ev) {
         let id = ev.target.getAttribute('data-id')
-        
-        fetch(myShit.url + "pizzas/"+ id)
-        .then((res)=>{
-            return res.json()
-        })
-        .then((res) =>{ 
-            console.log(res)
-        })
+
+        fetch(myShit.url + "pizzas/" + id)
+            .then((res) => {
+                return res.json()
+            })
+            .then((res) => {
+                console.log(res)
+            })
     },
     //making the pizzas appear on the page
-    buildList:function(res) {
-        res.data.forEach(function(item){
+    buildList: function (res) {
+        res.data.forEach(function (item) {
             //find the element for use later
             let table = document.getElementById('pizzaList')
             //creating elements for each item return from the fetch
@@ -170,7 +198,7 @@ let myShit = {
             remove.classList.add('btn-dark')
             remove.setAttributeNode(removeID)
             remove.setAttributeNode(removeType)
-            
+
             //append child
             buttons.appendChild(edit)
             buttons.appendChild(remove)
@@ -222,13 +250,13 @@ let myShit = {
     /// MAKE NEW USER ACCOUNT ///
     /////////////////////////////
     //Post request to /users  //////\\\\\\ Makes New User 
-    postNewUser:function(){
+    postNewUser: function () {
         let isStaff = null
-            let value = document.getElementById('accountType').value
-            isStaff= false
-            if (value != "false"){
-                isStaff = true
-            }
+        let value = document.getElementById('accountType').value
+        isStaff = false
+        if (value != "false") {
+            isStaff = true
+        }
         let newUser = {
             "firstName": document.getElementById('firstName').value,
             "lastName": document.getElementById('lastName').value,
@@ -239,36 +267,37 @@ let myShit = {
         let option = {
             method: 'POST',
             mode: 'cors',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json'
             },
-            body:JSON.stringify(newUser)
+            body: JSON.stringify(newUser)
         }
         fetch(myShit.url + "auth/users", option)
-        .then((res) =>{
-            return res.json()
-        })
-        .then((data)=>{
-            console.log(data)
-        })
+            .then((res) => {
+                return res.json()
+            })
+            .then((data) => {
+                console.log(data)
+            })
         console.log(newUser)
     },
     //Post reqiest to /users/token /////\\\\\ Login funciton
-    loginUser:function(){
+    loginUser: function () {
         let login = {
-            email:document.getElementById('userEmail').value,
-            password:document.getElementById('userPassword').value   
+            email: document.getElementById('userEmail').value,
+            password: document.getElementById('userPassword').value
         }
         let option = {
             method: 'POST',
             mode: 'cors',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json'
             },
-            body:JSON.stringify(login)
+            body: JSON.stringify(login)
         }
-        try{
+        try {
             fetch(myShit.url + "auth/users/token", option)
+
             .then((res) => {
                 console.log(res)
                 return res.json()
@@ -287,30 +316,31 @@ let myShit = {
                     console.log("sucess")
                 }
             })
-
-        }
-        catch(err){
-            console.log("something happened!--------------------------------" )
+        } catch (err) {
+            console.log("something happened!--------------------------------")
             console.log(err)
         }
     },
 
-
     ////////////////////////////////////////////////
     ///     USER PROFILE, PASSWORD CHANGING      ///
     ////////////////////////////////////////////////
+
     //GET user profile info
-    getUserInfo:function() {
+    getUserInfo: function () {
+
+
         let option = {
             method: 'GET',
             mode: 'cors',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json',
                 'bearer': myShit.token
             }
         }
-        try{
+        try {
             fetch(myShit.url + "auth/users/me", option)
+
             .then((res) => {
                 return res.json()
             })
@@ -332,7 +362,7 @@ let myShit = {
             console.log(err)
         }
     },
-    profileBuilder:function(userData) {
+    profileBuilder: function (userData) {
         let fieldFirstName = document.getElementById('staticFirstName')
         let fieldLastName = document.getElementById('staticLastName')
         let fieldEmail = document.getElementById('staticEmail')
