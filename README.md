@@ -1,6 +1,11 @@
 # pizzaTracker
 Pizzashop dashboard // item tracker.
 
+Update April 27:
+  I had to change the variable for the fetch calls because we ended up using an AWS server since the Edumedia server wouldn't work for me. The last commit is only for the variable
+
+
+
 Got SPA navigation working
 Added some CSS stuff, nothing permenant was just testing.
 
