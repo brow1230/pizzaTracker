@@ -152,7 +152,7 @@ let frontEnd = {
     id:null,
     token:null,
     //base URL,
-    url: "http://localhost:3030/api/",
+    url: "http://99.79.103.208:3030/api/",
     //basic GET request for pizza
     /////////////////////////
     ///  PIZZAS FUNCTIONS ///
